@@ -34,7 +34,7 @@
             <li class="menu-title">Data</li>
 
             <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="{{route('categoryProduct.index')}}" class="menu-link">
                     <span class="menu-icon"><i data-feather="check-circle"></i></span>
                     <span class="menu-text"> Kategori </span>
                 </a>
