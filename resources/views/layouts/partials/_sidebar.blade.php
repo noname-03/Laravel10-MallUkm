@@ -3,15 +3,15 @@
     <!-- Brand Logo -->
     <div class="logo-box">
         <!-- Brand Logo Light -->
-        <a href="index.html" class="logo-light">
-            <img src="{{asset('/')}}assets/images/logoMall.png" alt="logo" class="logo-lg">
-            <img src="assets/images/logo-sm.png" alt="small logo" class="logo-sm">
+        <a href="{{route('home')}}" class="logo-light">
+            <img src="{{asset('/')}}assets/images/logoMall.png" alt="logo" width="100">
+            {{-- <img src="assets/images/logo-sm.png" alt="small logo" class="logo-sm"> --}}
         </a>
 
         <!-- Brand Logo Dark -->
         <a href="{{route('home')}}" class="logo-dark">
             <img src="{{asset('/')}}assets/images/logoMall.png" alt="logo" width="100">
-            <img src="assets/images/logo-sm.png" alt="small logo" class="logo-sm">
+            {{-- <img src="assets/images/logo-sm.png" alt="small logo" class="logo-sm"> --}}
         </a>
     </div>
 
