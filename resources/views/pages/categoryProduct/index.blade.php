@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Kategori Prodak')
+@section('title', 'Kategori Produk')
 @push('styles')
 <!-- third party css -->
 <link href="{{ asset('/') }}assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet"
@@ -23,10 +23,10 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                        <li class="breadcrumb-item active">Kategori Prodak</li>
+                        <li class="breadcrumb-item active">Kategori Produk</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Data Kategori Prodak</h4>
+                <h4 class="page-title">Data Kategori Produk</h4>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title">Data Kategori Prodak</h4>
+                    <h4 class="header-title">Data Kategori Produk</h4>
                     <p class="text-muted font-13 mb-2 mt-2">
                         <a href="{{route('categoryProduct.create')}}" class="btn btn-sm btn-success">Tambah Data</a>
                     </p>

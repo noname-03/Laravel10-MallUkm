@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Perbarui Kategori Prodak')
+@section('title', 'Perbarui Kategori Produk')
 @section('content')
 <!-- Start Content-->
 <div class="container-fluid">
@@ -11,12 +11,12 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('categoryProduct.index')}}">Kategori Prodak</a>
+                        <li class="breadcrumb-item"><a href="{{route('categoryProduct.index')}}">Kategori Produk</a>
                         </li>
-                        <li class="breadcrumb-item active">Perbarui Kategori Prodak</li>
+                        <li class="breadcrumb-item active">Perbarui Kategori Produk</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Perbarui Data Kategori Prodak</h4>
+                <h4 class="page-title">Perbarui Data Kategori Produk</h4>
             </div>
         </div>
     </div>
@@ -27,16 +27,16 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h4 class="header-title">Formulir Data Kategori Prodak</h4>
+                    <h4 class="header-title">Formulir Data Kategori Produk</h4>
 
                     <form action="{{route('categoryProduct.update', $categoryProduct->id)}}" method="post">
                         @csrf @method('patch')
 
                         <div class="mb-3">
-                            <label for="title" class="form-label">Nama Kategori Prodak</label>
+                            <label for="title" class="form-label">Nama Kategori Produk</label>
                             <input type="text" id="title" name="title"
                                 class="form-control @error('title') is-invalid @enderror"
-                                placeholder="Masukan Nama Kategori Prodak" value="{{$categoryProduct->title}}">
+                                placeholder="Masukan Nama Kategori Produk" value="{{$categoryProduct->title}}">
                             @error('title')
                             <div class="invalid-feedback">
                                 {{$message}}

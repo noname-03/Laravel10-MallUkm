@@ -4,13 +4,13 @@
     <div class="logo-box">
         <!-- Brand Logo Light -->
         <a href="index.html" class="logo-light">
-            <img src="assets/images/logo-light.png" alt="logo" class="logo-lg">
+            <img src="{{asset('/')}}assets/images/logoMall.png" alt="logo" class="logo-lg">
             <img src="assets/images/logo-sm.png" alt="small logo" class="logo-sm">
         </a>
 
         <!-- Brand Logo Dark -->
         <a href="{{route('home')}}" class="logo-dark">
-            <img src="assets/images/logo-dark.png" alt="logo" class="logo-lg">
+            <img src="{{asset('/')}}assets/images/logoMall.png" alt="logo" width="100">
             <img src="assets/images/logo-sm.png" alt="small logo" class="logo-sm">
         </a>
     </div>
@@ -40,9 +40,9 @@
                 </a>
             </li>
             <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a href="{{route('Product.index')}}" class="menu-link">
                     <span class="menu-icon"><i data-feather="check-circle"></i></span>
-                    <span class="menu-text"> Prodak </span>
+                    <span class="menu-text"> Produk </span>
                 </a>
             </li>
             <li class="menu-item">
