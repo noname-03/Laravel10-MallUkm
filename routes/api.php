@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryProductController;
+use App\Http\Controllers\Api\ProductController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -17,7 +18,11 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('getUser', [AuthController::class, 'getUser']);
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('refresh', [AuthController::class, 'refresh']);
-
-        Route::get('category', [CategoryProductController::class, 'index']);
     });
 });
+
+Route::get('category', [CategoryProductController::class, 'index']);
+
+Route::get('product', [ProductController::class, 'index']);
+Route::get('product/show/{id}', [ProductController::class, 'show']);
+Route::get('product/recomendation', [ProductController::class, 'recomendation']);

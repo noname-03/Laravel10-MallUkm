@@ -8,6 +8,7 @@ use App\Models\CategoryProduct;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Helpers\ImageHelper;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -33,6 +34,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         if ($request->hasFile('photo')) {
             $files = $request->file('photo');
             $directory = 'images/product'; // Direktori penyimpanan gambar
@@ -101,8 +103,12 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        Product::findOrFail($id)->delete();
-
+        $product = Product::findOrFail($id);
+        $product->photo = explode(',', $product->photo);
+        foreach ($product->photo as $item) {
+            File::delete(public_path('images/product/' . $item));
+        }
+        $product->delete();
         return redirect()->route('Product.index');
     }
 }
