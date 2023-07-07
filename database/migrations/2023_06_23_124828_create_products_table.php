@@ -18,9 +18,9 @@ return new class extends Migration {
             $table->string('price_retail')->nullable();
             $table->double('qty');
             $table->string('unit');
-            $table->string('variant_unit');
+            $table->text('unit_variant');
             $table->text('description');
-            $table->string('photo');
+            $table->text('photo');
             $table->timestamps();
         });
     }

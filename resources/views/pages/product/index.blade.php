@@ -1,17 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Kategori Produk')
+@section('title', 'Produk')
 @push('styles')
-{{--
-<!-- third party css -->
-<link href="{{ asset('/') }}assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet"
-    type="text/css" />
-<link href="{{ asset('/') }}assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css"
-    rel="stylesheet" type="text/css" />
-<link href="{{ asset('/') }}assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet"
-    type="text/css" />
-<link href="{{ asset('/') }}assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css" rel="stylesheet"
-    type="text/css" />
-<!-- third party css end --> --}}
 @endpush
 
 @section('content')
@@ -26,9 +15,8 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Ecommerce</a></li>
-                        <li class="breadcrumb-item active">Products</li>
+                        <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+                        <li class="breadcrumb-item active">Produk</li>
                     </ol>
                 </div>
                 <h4 class="page-title">Products</h4>
@@ -77,37 +65,37 @@
     <!-- end row-->
 
     <div class="row">
+
+        @foreach ($products as $item)
         <div class="col-md-6 col-lg-4 col-xl-3">
             <div class="card product-box">
                 <div class="card-body">
                     <div class="product-action">
-                        <a href="javascript: void(0);" class="btn btn-success btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-pencil"></i></a>
-                        <a href="javascript: void(0);" class="btn btn-danger btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-close"></i></a>
+                        <a href="{{route('Product.edit', $item->id)}}"
+                            class="btn btn-success btn-xs waves-effect waves-light"><i class="mdi mdi-pencil"></i></a>
+                        <form action="{{route('Product.destroy', $item->id)}}" method="post">
+                            @method('DELETE') @csrf
+                            <button type="submit"
+                                onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Ini?')"
+                                class="btn btn-danger btn-xs waves-effect waves-light"><i
+                                    class="mdi mdi-close"></i></button>
+                        </form>
                     </div>
 
                     <div class="bg-light">
-                        <img src="assets/images/products/product-1.png" alt="product-pic" class="img-fluid" />
+                        <img src="{{asset('images/product/'. $item->photo)}}" alt="product-pic" class="img-fluid" />
                     </div>
 
                     <div class="product-info">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h5 class="font-16 mt-0 sp-line-1"><a href="{{route('Product.edit', 1)}}"
-                                        class="text-dark">Jones Men's T-shirt (Blue)</a> </h5>
-                                <div class="text-warning mb-2 font-13">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h5 class="m-0"> <span class="text-muted"> Stocks : 98 pcs</span></h5>
+                                <h5 class="font-16 mt-0 sp-line-1"><a href="{{route('Product.show', $item->id)}}"
+                                        class="text-dark">{{$item->title}}</a> </h5>
+                                <h5 class="m-0"> <span class="text-muted"> Stocks : {{$item->qty}} pcs</span></h5>
                             </div>
                             <div class="col-auto">
                                 <div class="product-price-tag">
-                                    $39
+                                    @currency($item->price)
                                 </div>
                             </div>
                         </div> <!-- end row -->
@@ -115,279 +103,8 @@
                 </div>
             </div> <!-- end card-->
         </div> <!-- end col-->
+        @endforeach
 
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="card product-box">
-                <div class="card-body">
-                    <div class="product-action">
-                        <a href="javascript: void(0);" class="btn btn-success btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-pencil"></i></a>
-                        <a href="javascript: void(0);" class="btn btn-danger btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-close"></i></a>
-                    </div>
-
-                    <div class="bg-light">
-                        <img src="assets/images/products/product-2.png" alt="product-pic" class="img-fluid" />
-                    </div>
-
-                    <div class="product-info">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h5 class="font-16 mt-0 sp-line-1"><a href="{{route('Product.edit', 1)}}"
-                                        class="text-dark">Brown Hoodie for men</a> </h5>
-                                <div class="text-warning mb-2 font-13">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h5 class="m-0"> <span class="text-muted"> Stocks : 23 pcs</span></h5>
-                            </div>
-                            <div class="col-auto">
-                                <div class="product-price-tag">
-                                    $98
-                                </div>
-                            </div>
-                        </div> <!-- end row -->
-                    </div> <!-- end product info-->
-                </div>
-            </div> <!-- end card-->
-        </div> <!-- end col-->
-
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="card product-box">
-                <div class="card-body">
-                    <div class="product-action">
-                        <a href="javascript: void(0);" class="btn btn-success btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-pencil"></i></a>
-                        <a href="javascript: void(0);" class="btn btn-danger btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-close"></i></a>
-                    </div>
-
-                    <div class="bg-light">
-                        <img src="assets/images/products/product-3.png" alt="product-pic" class="img-fluid" />
-                    </div>
-
-                    <div class="product-info">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h5 class="font-16 mt-0 sp-line-1"><a href="{{route('Product.edit', 1)}}"
-                                        class="text-dark">Designer Awesome T-Shirt</a> </h5>
-                                <div class="text-warning mb-2 font-13">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h5 class="m-0"> <span class="text-muted"> Stocks : 235 pcs</span></h5>
-                            </div>
-                            <div class="col-auto">
-                                <div class="product-price-tag">
-                                    $49
-                                </div>
-                            </div>
-                        </div> <!-- end row -->
-                    </div> <!-- end product info-->
-                </div>
-            </div> <!-- end card-->
-        </div> <!-- end col-->
-
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="card product-box">
-                <div class="card-body">
-                    <div class="product-action">
-                        <a href="javascript: void(0);" class="btn btn-success btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-pencil"></i></a>
-                        <a href="javascript: void(0);" class="btn btn-danger btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-close"></i></a>
-                    </div>
-
-                    <div class="bg-light">
-                        <img src="assets/images/products/product-4.png" alt="product-pic" class="img-fluid" />
-                    </div>
-
-                    <div class="product-info">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h5 class="font-16 mt-0 sp-line-1"><a href="{{route('Product.edit', 1)}}"
-                                        class="text-dark">Jones Awesome T-Shirt</a> </h5>
-                                <div class="text-warning mb-2 font-13">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h5 class="m-0"> <span class="text-muted"> Stocks : 385 pcs</span></h5>
-                            </div>
-                            <div class="col-auto">
-                                <div class="product-price-tag">
-                                    $29
-                                </div>
-                            </div>
-                        </div> <!-- end row -->
-                    </div> <!-- end product info-->
-                </div>
-            </div> <!-- end card-->
-        </div> <!-- end col-->
-
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="card product-box">
-                <div class="card-body">
-                    <div class="product-action">
-                        <a href="javascript: void(0);" class="btn btn-success btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-pencil"></i></a>
-                        <a href="javascript: void(0);" class="btn btn-danger btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-close"></i></a>
-                    </div>
-
-                    <div class="bg-light">
-                        <img src="assets/images/products/product-5.png" alt="product-pic" class="img-fluid" />
-                    </div>
-
-                    <div class="product-info">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h5 class="font-16 mt-0 sp-line-1"><a href="{{route('Product.edit', 1)}}"
-                                        class="text-dark">Green Hoodie for men</a> </h5>
-                                <div class="text-warning mb-2 font-13">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h5 class="m-0"> <span class="text-muted"> Stocks : 25 pcs</span></h5>
-                            </div>
-                            <div class="col-auto">
-                                <div class="product-price-tag">
-                                    $49
-                                </div>
-                            </div>
-                        </div> <!-- end row -->
-                    </div> <!-- end product info-->
-                </div>
-            </div> <!-- end card-->
-        </div> <!-- end col-->
-
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="card product-box">
-                <div class="card-body">
-                    <div class="product-action">
-                        <a href="javascript: void(0);" class="btn btn-success btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-pencil"></i></a>
-                        <a href="javascript: void(0);" class="btn btn-danger btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-close"></i></a>
-                    </div>
-
-                    <div class="bg-light">
-                        <img src="assets/images/products/product-6.png" alt="product-pic" class="img-fluid" />
-                    </div>
-
-                    <div class="product-info">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h5 class="font-16 mt-0 sp-line-1"><a href="{{route('Product.edit', 1)}}"
-                                        class="text-dark">Blue Awesome T-Shirt</a> </h5>
-                                <div class="text-warning mb-2 font-13">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h5 class="m-0"> <span class="text-muted"> Stocks : 39 pcs</span></h5>
-                            </div>
-                            <div class="col-auto">
-                                <div class="product-price-tag">
-                                    $19
-                                </div>
-                            </div>
-                        </div> <!-- end row -->
-                    </div> <!-- end product info-->
-                </div>
-            </div> <!-- end card-->
-        </div> <!-- end col-->
-
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="card product-box">
-                <div class="card-body">
-                    <div class="product-action">
-                        <a href="javascript: void(0);" class="btn btn-success btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-pencil"></i></a>
-                        <a href="javascript: void(0);" class="btn btn-danger btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-close"></i></a>
-                    </div>
-
-                    <div class="bg-light">
-                        <img src="assets/images/products/product-7.png" alt="product-pic" class="img-fluid" />
-                    </div>
-
-                    <div class="product-info">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h5 class="font-16 mt-0 sp-line-1"><a href="{{route('Product.edit', 1)}}"
-                                        class="text-dark">Jones Men's T-shirt (Green)</a> </h5>
-                                <div class="text-warning mb-2 font-13">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h5 class="m-0"> <span class="text-muted"> Stocks : 36 pcs</span></h5>
-                            </div>
-                            <div class="col-auto">
-                                <div class="product-price-tag">
-                                    $99
-                                </div>
-                            </div>
-                        </div> <!-- end row -->
-                    </div> <!-- end product info-->
-                </div>
-            </div> <!-- end card-->
-        </div> <!-- end col-->
-
-        <div class="col-md-6 col-lg-4 col-xl-3">
-            <div class="card product-box">
-                <div class="card-body">
-                    <div class="product-action">
-                        <a href="javascript: void(0);" class="btn btn-success btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-pencil"></i></a>
-                        <a href="javascript: void(0);" class="btn btn-danger btn-xs waves-effect waves-light"><i
-                                class="mdi mdi-close"></i></a>
-                    </div>
-
-                    <div class="bg-light">
-                        <img src="assets/images/products/product-8.png" alt="product-pic" class="img-fluid" />
-                    </div>
-
-                    <div class="product-info">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h5 class="font-16 mt-0 sp-line-1"><a href="{{route('Product.edit', 1)}}"
-                                        class="text-dark">Red Hoodie for men</a> </h5>
-                                <div class="text-warning mb-2 font-13">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <h5 class="m-0"> <span class="text-muted"> Stocks : 128 pcs</span></h5>
-                            </div>
-                            <div class="col-auto">
-                                <div class="product-price-tag">
-                                    $29
-                                </div>
-                            </div>
-                        </div> <!-- end row -->
-                    </div> <!-- end product info-->
-                </div>
-            </div> <!-- end card-->
-        </div> <!-- end col-->
     </div>
     <!-- end row-->
 
@@ -419,23 +136,3 @@
 </div> <!-- container -->
 
 @endsection
-@push('scripts')
-<!-- third party js -->
-{{-- <script src="{{ asset('/') }}assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="{{ asset('/') }}assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-<script src="{{ asset('/') }}assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="{{ asset('/') }}assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
-<script src="{{ asset('/') }}assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<script src="{{ asset('/') }}assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
-<script src="{{ asset('/') }}assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
-<script src="{{ asset('/') }}assets/libs/datatables.net-buttons/js/buttons.flash.min.js"></script>
-<script src="{{ asset('/') }}assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
-<script src="{{ asset('/') }}assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-<script src="{{ asset('/') }}assets/libs/datatables.net-select/js/dataTables.select.min.js"></script>
-<script src="{{ asset('/') }}assets/libs/pdfmake/build/pdfmake.min.js"></script>
-<script src="{{ asset('/') }}assets/libs/pdfmake/build/vfs_fonts.js"></script>
-<!-- third party js ends -->
-
-<!-- Datatables init -->
-<script src="{{ asset('/') }}assets/js/pages/datatables.init.js"></script> --}}
-@endpush
