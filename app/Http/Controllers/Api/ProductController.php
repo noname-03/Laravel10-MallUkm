@@ -11,16 +11,18 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
+
         $products->map(function ($product) {
             $photos = explode(',', $product->photo);
             $photoUrls = [];
+            $unit_variant = explode(',', $product->unit_variant);
 
             foreach ($photos as $photo) {
                 $photoUrls[] = asset('images/product/' . $photo);
             }
 
             $product->photo = $photoUrls;
-
+            $product->unit_variant = $unit_variant;
             return $product;
         });
 
@@ -37,13 +39,14 @@ class ProductController extends Controller
         $products->map(function ($product) {
             $photos = explode(',', $product->photo);
             $photoUrls = [];
+            $unit_variant = explode(',', $product->unit_variant);
 
             foreach ($photos as $photo) {
                 $photoUrls[] = asset('images/product/' . $photo);
             }
 
             $product->photo = $photoUrls;
-
+            $product->unit_variant = $unit_variant;
             return $product;
         });
 
@@ -89,8 +92,5 @@ class ProductController extends Controller
             'message' => 'Berhasil Mengambil Data Product',
             'data' => $product
         ], 200);
-
     }
-
-
 }

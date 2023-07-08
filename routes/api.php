@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryProductController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\CartController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -18,6 +19,9 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('getUser', [AuthController::class, 'getUser']);
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('refresh', [AuthController::class, 'refresh']);
+
+        Route::get('cart', [CartController::class, 'index']);
+        Route::post('cart', [CartController::class, 'store']);
     });
 });
 
