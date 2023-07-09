@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('price');
             $table->string('price_retail')->nullable();
             $table->double('qty');
-            $table->integer('weight');
+            $table->string('weight'); // Tipe data decimal dengan presisi 8 dan skala 2
             $table->double('promo')->nullable();
             $table->string('unit');
             $table->text('unit_variant');

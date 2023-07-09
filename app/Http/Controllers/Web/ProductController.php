@@ -34,7 +34,6 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         if ($request->hasFile('photo')) {
             $files = $request->file('photo');
             $directory = 'images/product'; // Direktori penyimpanan gambar
@@ -47,7 +46,6 @@ class ProductController extends Controller
             }
             $ToString = array_map('strval', $filenames);
             $NameImageString = implode(',', ($ToString));
-            // dd($a);
 
             // Lakukan apa pun yang perlu Anda lakukan dengan path gambar, misalnya menyimpannya ke database
         }
