@@ -87,6 +87,8 @@ class ProductController extends Controller
             $product->status = "Tidak Tersedia";
         }
 
+        $product->category = $product->categoryProduct->title;
+        unset($product->categoryProduct);
         return response()->json([
             'code' => 200,
             'message' => 'Berhasil Mengambil Data Product',
