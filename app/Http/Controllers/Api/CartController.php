@@ -51,4 +51,21 @@ class CartController extends Controller
             'message' => 'Data Product Berhasil Ditambahkan Kedalam Keranjang'
         ]);
     }
+
+    public function delete($id)
+    {
+        $user = auth()->guard('api')->user();
+        $cart = Cart::where('user_id', $user->id)->where('id', $id)->first();
+        if ($cart == null) {
+            return response()->json([
+                'code' => 404,
+                'message' => 'Data Product Tidak Ditemukan'
+            ]);
+        }
+        $cart->delete();
+        return response()->json([
+            'code' => 200,
+            'message' => 'Data Product Berhasil Dihapus Dari Keranjang'
+        ]);
+    }
 }
