@@ -22,6 +22,7 @@ Route::group(['prefix' => 'auth'], function () {
 
         Route::get('cart', [CartController::class, 'index']);
         Route::post('cart', [CartController::class, 'store']);
+        Route::post('cart/update/{id}', [CartController::class, 'update']);
         Route::post('cart/delete/{id}', [CartController::class, 'delete']);
     });
 });
