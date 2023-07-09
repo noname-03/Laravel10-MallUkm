@@ -33,9 +33,9 @@ class ProductController extends Controller
         ], 200);
     }
 
-    public function recomendation()
+    public function recomendation($params)
     {
-        $products = Product::inRandomOrder()->limit(12)->get();
+        $products = Product::inRandomOrder()->limit($params)->get();
         $products->map(function ($product) {
             $photos = explode(',', $product->photo);
             $photoUrls = [];
