@@ -95,4 +95,29 @@ class ProductController extends Controller
             'data' => $product
         ], 200);
     }
+
+    public function promo()
+    {
+        $products = Product::whereNotNull('promo')->get();
+
+        $products->map(function ($product) {
+            $photos = explode(',', $product->photo);
+            $photoUrls = [];
+            $unit_variant = explode(',', $product->unit_variant);
+
+            foreach ($photos as $photo) {
+                $photoUrls[] = asset('images/product/' . $photo);
+            }
+
+            $product->photo = $photoUrls;
+            $product->unit_variant = $unit_variant;
+            return $product;
+        });
+
+        return response()->json([
+            'code' => 200,
+            'message' => 'Berhasil Mengambil Data Product Promo',
+            'data' => $products
+        ], 200);
+    }
 }

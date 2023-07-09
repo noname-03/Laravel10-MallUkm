@@ -15,6 +15,8 @@ class Product extends Model
         'price',
         'price_retail',
         'qty',
+        'weight',
+        'promo',
         'unit',
         'unit_variant',
         'description',

@@ -75,7 +75,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="price_retail" class="form-label">Harga Promo </label>
+                                    <label for="price_retail" class="form-label">Harga Coret </label>
                                     <input type="number" id="price_retail" name="price_retail"
                                         class="form-control @error('price_retail') is-invalid @enderror"
                                         placeholder="e.g : 150000" value="{{old('price_retail')}}">
@@ -87,7 +87,21 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="qty" class="form-label">Kuantitas </label>
+                                    <label for="promo" class="form-label">Promo </label>
+                                    <input type="number" id="promo" name="promo"
+                                        class="form-control @error('promo') is-invalid @enderror"
+                                        placeholder="e.g : 150000 || promo untuk pembelian langsung"
+                                        value="{{old('promo')}}">
+                                    @error('promo')
+                                    <div class="invalid-feedback">
+                                        {{$message}}
+                                    </div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="qty" class="form-label">Kuantitas <span
+                                            class="text-danger">*</span></label>
                                     <input type="number" id="qty" name="qty"
                                         class="form-control @error('qty') is-invalid @enderror" placeholder="e.g : 150"
                                         value="{{old('qty')}}" required>
@@ -100,7 +114,22 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="mb-3">
-                                    <label for="unit" class="form-label">Nama Satuan </label>
+                                    <label for="weight" class="form-label">Ukuran <span
+                                            class="text-danger">*</span></label>
+                                    <input type="number" id="weight" name="weight"
+                                        class="form-control @error('weight') is-invalid @enderror"
+                                        placeholder="e.g : 1 || 0.1 || ini dalam satuan KG" value="{{old('weight')}}"
+                                        required>
+                                    @error('weight')
+                                    <div class="invalid-feedback">
+                                        {{$message}}
+                                    </div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="unit" class="form-label">Nama Satuan <span
+                                            class="text-danger">*</span></label>
                                     <input type="text" id="unit" name="unit"
                                         class="form-control @error('unit') is-invalid @enderror"
                                         placeholder="e.g : Level Pedas/Ukuran/" value="{{old('unit')}}" required>
@@ -112,14 +141,16 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="unit_variant" class="form-label">Varian Satuan </label>
+                                    <label for="unit_variant" class="form-label">Varian Satuan <span
+                                            class="text-danger">*</span></label>
                                     <textarea class="form-control" id="unit_variant" rows="3"
                                         placeholder="e.g : 1,2,3, || pisahkan dengan koma untuk jumlah banyak "
                                         name="unit_variant" required>{{old('unit_variant')}}</textarea>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="description" class="form-label">Deskripsi </label>
+                                    <label for="description" class="form-label">Deskripsi <span
+                                            class="text-danger">*</span></label>
                                     <textarea class="form-control" id="description" rows="3"
                                         placeholder="e.g : Ngejelasain Prodak " name="description"
                                         required>{{old('description')}}</textarea>

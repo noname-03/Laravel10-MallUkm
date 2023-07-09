@@ -31,3 +31,4 @@ Route::get('category', [CategoryProductController::class, 'index']);
 Route::get('product', [ProductController::class, 'index']);
 Route::get('product/show/{id}', [ProductController::class, 'show']);
 Route::get('product/recomendation/{params}', [ProductController::class, 'recomendation']);
+Route::get('product/promo', [ProductController::class, 'promo']);

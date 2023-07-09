@@ -17,6 +17,8 @@ return new class extends Migration {
             $table->string('price');
             $table->string('price_retail')->nullable();
             $table->double('qty');
+            $table->integer('weight');
+            $table->double('promo')->nullable();
             $table->string('unit');
             $table->text('unit_variant');
             $table->text('description');
