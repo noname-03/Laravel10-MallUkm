@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryProductController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\CarouselController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -33,3 +34,4 @@ Route::get('product', [ProductController::class, 'index']);
 Route::get('product/show/{id}', [ProductController::class, 'show']);
 Route::get('product/recomendation/{params}', [ProductController::class, 'recomendation']);
 Route::get('product/promo', [ProductController::class, 'promo']);
+Route::get('carousel', [CarouselController::class, 'index']);
