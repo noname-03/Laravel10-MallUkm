@@ -42,7 +42,8 @@
                                 <div class="mb-3">
                                     <label for="photo" class="form-label">Photo <span
                                             class="text-danger">*</span></label>
-                                    <input type="file" id="photo" name="photo" class="form-control" accept="image/*"
+                                    <input type="file" id="photo" name="photo"
+                                        class="form-control @error('photo') is-invalid @enderror" accept="image/*"
                                         multiple required>
                                     @error('photo')
                                     <div class="invalid-feedback">
