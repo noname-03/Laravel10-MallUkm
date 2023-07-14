@@ -14,7 +14,7 @@ class StoreCarouselRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:1024',
         ];
     }
 }
