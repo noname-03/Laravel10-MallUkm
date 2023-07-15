@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\CategoryProductController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CarouselController;
+use App\Http\Controllers\Api\AddressController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -25,6 +26,11 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('cart', [CartController::class, 'store']);
         Route::post('cart/update/{id}', [CartController::class, 'update']);
         Route::post('cart/delete/{id}', [CartController::class, 'delete']);
+
+        Route::get('address', [AddressController::class, 'index']);
+        Route::post('address', [AddressController::class, 'store']);
+        Route::post('address/update/{id}', [AddressController::class, 'update']);
+        Route::post('address/delete/{id}', [AddressController::class, 'delete']);
     });
 });
 
