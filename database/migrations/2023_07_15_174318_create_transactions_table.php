@@ -14,11 +14,12 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('address_id')->constrained()->cascadeOnDelete();
+            $table->text('order_id');
             $table->string('courier');
-            $table->string('receipt_number');
+            $table->string('cost_courier');
+            $table->string('receipt_number')->nullable();
             $table->double('total');
-            $table->string('payment_token');
-            $table->text('payment_url');
+            $table->text('payment_url')->nullable();
             $table->enum('status', ['paid', 'unpaid', 'canceled']);
             $table->timestamps();
         });

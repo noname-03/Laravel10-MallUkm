@@ -35,7 +35,7 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('address/selected', [AddressController::class, 'selected']);
         Route::post('address/update/{id}/selected', [AddressController::class, 'updateSelected']);
 
-        Route::post('payments', [TransactionController::class, 'createPayment']);
+        Route::post('transaction', [TransactionController::class, 'createPayment']);
     });
 });
 
@@ -46,3 +46,4 @@ Route::get('product/show/{id}', [ProductController::class, 'show']);
 Route::get('product/recomendation/{params}', [ProductController::class, 'recomendation']);
 Route::get('product/promo', [ProductController::class, 'promo']);
 Route::get('carousel', [CarouselController::class, 'index']);
+Route::post('midtrans/callback', [TransactionController::class, 'callback']);

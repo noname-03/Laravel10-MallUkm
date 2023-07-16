@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\DetailTransaction;
 
 class Transaction extends Model
 {
@@ -14,10 +15,11 @@ class Transaction extends Model
         [
             'user_id',
             'address_id',
+            'order_id',
             'courier',
+            'cost_courier',
             'receipt_number',
             'total',
-            'payment_token',
             'payment_url',
             'status'
         ];
@@ -25,5 +27,10 @@ class Transaction extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function detailTransaction()
+    {
+        return $this->hasMany(DetailTransaction::class);
     }
 }
