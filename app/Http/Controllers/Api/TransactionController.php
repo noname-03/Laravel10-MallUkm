@@ -14,6 +14,31 @@ use App\Models\Cart;
 
 class TransactionController extends Controller
 {
+    public function index()
+    {
+        $transaction = Transaction::with(['detailTransaction.product'])->where('user_id', auth()->guard('api')->user()->id)->get();
+        $transaction->each(function ($transaction) {
+            $transaction->detailTransaction->each(function ($detailTransaction) {
+                $detailTransaction->unsetRelation('product');
+            });
+        });
+        return $this->successResponse('Data Transaksi Berhasil Ditampilkan', $transaction);
+    }
+
+    public function sortByStatus($params)
+    {
+        $transaction = Transaction::with(['detailTransaction.product'])->where('user_id', auth()->guard('api')->user()->id)->where('status', $params)->get();
+        $transaction->each(function ($transaction) {
+            $transaction->detailTransaction->each(function ($detailTransaction) {
+                $detailTransaction->unsetRelation('product');
+            });
+        });
+
+        if (!$transaction) {
+            return $this->notFoundResponse('Data Transaksi Tidak Ditemukan');
+        }
+        return $this->successResponse('Data Transaksi Berhasil Ditampilkan', $transaction);
+    }
 
     public function callback(Request $request)
     {
@@ -141,7 +166,7 @@ class TransactionController extends Controller
             'expiry' => [
                 'start_time' => date('Y-m-d H:i:s T'),
                 'unit' => "minutes",
-                'duration' => 1
+                'duration' => 1440
             ]
         ];
     }
@@ -173,6 +198,7 @@ class TransactionController extends Controller
     {
         return response()->json([
             'code' => 200,
+
             'message' => $message,
             'data' => $data
         ]);

@@ -35,7 +35,9 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('address/selected', [AddressController::class, 'selected']);
         Route::post('address/update/{id}/selected', [AddressController::class, 'updateSelected']);
 
+        Route::get('transaction', [TransactionController::class, 'index']);
         Route::post('transaction', [TransactionController::class, 'createPayment']);
+        Route::get('transaction/{params}', [TransactionController::class, 'sortByStatus']);
     });
 });
 
