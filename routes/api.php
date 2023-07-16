@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryProductController;
 use App\Http\Controllers\Api\ProductController;
@@ -31,6 +32,8 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('address', [AddressController::class, 'store']);
         Route::post('address/update/{id}', [AddressController::class, 'update']);
         Route::post('address/delete/{id}', [AddressController::class, 'delete']);
+
+        Route::post('payments', [TransactionController::class, 'createPayment']);
     });
 });
 

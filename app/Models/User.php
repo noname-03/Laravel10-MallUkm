@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Models\Address;
+use App\Models\Cart;
+use App\Models\Transaction;
+
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -63,5 +66,10 @@ class User extends Authenticatable implements JWTSubject
     public function addresses()
     {
         return $this->hasMany(Address::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
     }
 }
