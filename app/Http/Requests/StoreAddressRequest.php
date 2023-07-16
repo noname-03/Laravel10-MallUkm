@@ -17,7 +17,7 @@ class StoreAddressRequest extends FormRequest
             'address' => 'required',
             'destination_id' => 'required',
             'address_detail' => 'required',
-            'status' => 'required',
+            'status' => 'required|in:selected,unselected',
         ];
     }
 
@@ -30,6 +30,7 @@ class StoreAddressRequest extends FormRequest
             'destination_id.required' => 'ID Kecamatan wajib diisi',
             'address_detail.required' => 'Detail Alamat wajib diisi',
             'status.required' => 'Status wajib diisi',
+            'status.in' => 'Status harus berupa selected atau unselected',
         ];
     }
 

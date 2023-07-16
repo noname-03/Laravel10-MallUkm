@@ -97,4 +97,28 @@ class AddressController extends Controller
             'data' => $address
         ]);
     }
+
+    public function updateSelected($id, Request $request)
+    {
+        $user = auth()->guard('api')->user();
+        $address = $user->addresses()->where('id', $id)->first();
+
+        if (!$address) {
+            return response()->json([
+                'code' => '404',
+                'message' => 'Data Alamat Tidak Ditemukan',
+                'data' => null
+            ]);
+        }
+
+        $user->addresses()->where('id', '!=', $id)->update(['status' => 'unselected']);
+        $address->update(['status' => 'selected']);
+
+        return response()->json([
+            'code' => '200',
+            'message' => 'Data Alamat Berhasil Diubah',
+            'data' => $address
+        ]);
+    }
+
 }
