@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAddressRequest;
 use Illuminate\Http\Request;
+use App\Models\Address;
 
 class AddressController extends Controller
 {
@@ -77,6 +78,23 @@ class AddressController extends Controller
         return response()->json([
             'code' => '200',
             'message' => 'Data Alamat Berhasil Dihapus'
+        ]);
+    }
+
+    public function selected()
+    {
+        $address = auth()->guard('api')->user()->addresses()->where('status', 'selected')->first();
+        if (!$address) {
+            return response()->json([
+                'code' => '404',
+                'message' => 'Data Alamat Tidak Ditemukan',
+                'data' => null
+            ]);
+        }
+        return response()->json([
+            'code' => '200',
+            'message' => 'Data Alamat Berhasil Diambil',
+            'data' => $address
         ]);
     }
 }
