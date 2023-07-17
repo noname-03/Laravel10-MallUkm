@@ -11,7 +11,7 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|unique:users',
+            'email' => 'required|unique:users|email',
             'name' => 'required|unique:users',
             'password' => 'required|min:8'
         ];
@@ -22,6 +22,7 @@ class RegisterRequest extends FormRequest
         return [
             'email.required' => 'Email wajib diisi',
             'email.unique' => 'Email sudah ada',
+            'email.email' => 'Email tidak valid',
             'name.required' => 'Nama wajib diisi',
             'name.unique' => 'Nama sudah ada',
             'password.required' => 'Password wajib diisi',
