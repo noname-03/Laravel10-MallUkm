@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('Product', ProductController::class);
     Route::resource('carousel', CarouselController::class);
 
+    Route::resource('transaction', TransactionController::class);
+    Route::get('payments', [TransactionController::class, 'payment'])->name('payments');
 
-    Route::get('payments', [TransactionController::class, 'store']);
 });

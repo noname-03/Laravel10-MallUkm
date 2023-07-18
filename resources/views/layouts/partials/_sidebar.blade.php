@@ -52,6 +52,12 @@
                 </a>
             </li>
             <li class="menu-item">
+                <a href="{{route('transaction.index')}}" class="menu-link">
+                    <span class="menu-icon"><i data-feather="check-circle"></i></span>
+                    <span class="menu-text"> Transaksi </span>
+                </a>
+            </li>
+            <li class="menu-item">
                 <a href="#" class="menu-link">
                     <span class="menu-icon"><i data-feather="check-circle"></i></span>
                     <span class="menu-text"> Pertanyaan </span>
