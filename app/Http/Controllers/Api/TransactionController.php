@@ -192,7 +192,6 @@ class TransactionController extends Controller
         return response()->json([
             'code' => 200,
             'message' => $message,
-            'data' => null
         ]);
     }
 
@@ -201,7 +200,6 @@ class TransactionController extends Controller
         return response()->json([
             'code' => '400',
             'message' => $message,
-            'data' => null
         ]);
     }
 

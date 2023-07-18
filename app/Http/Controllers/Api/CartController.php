@@ -93,6 +93,7 @@ class CartController extends Controller
         ]);
     }
 
+
     public function update($id, StoreCartRequest $request)
     {
         $user = auth()->guard('api')->user();
@@ -114,20 +115,23 @@ class CartController extends Controller
             ]);
         }
 
-        // $requestedQty = intval($request->qty); // Mengonversi nilai ke integer untuk memastikan angka positif
-        // if ($requestedQty <= 0) {
-        //     return response()->json([
-        //         'code' => 400,
-        //         'message' => 'Jumlah Produk Yang Anda Masukkan Harus Lebih Besar Dari Nol'
-        //     ]);
-        // }
-
-        $totalQty = $cart->qty + $request->qty;
+        $requestedQty = intval($request->qty); // Mengonversi nilai ke integer
+        $totalQty = $cart->qty + $requestedQty;
 
         if ($totalQty > $product->qty) {
             return response()->json([
                 'code' => 400,
                 'message' => 'Jumlah Produk Yang Anda Masukkan Melebihi Stok Produk'
+            ]);
+        }
+
+        if ($totalQty <= 0) {
+            $cart->delete(); // Menghapus item dari keranjang jika hasil pengurangan adalah nol atau negatif
+
+            return response()->json([
+                'code' => 200,
+                'message' => 'Item berhasil dihapus dari keranjang',
+
             ]);
         }
 

@@ -17,7 +17,6 @@ class AddressController extends Controller
             return response()->json([
                 'code' => '404',
                 'message' => 'Data Alamat Tidak Ditemukan',
-                'data' => null
             ]);
         }
         return response()->json([
@@ -35,7 +34,6 @@ class AddressController extends Controller
             return response()->json([
                 'code' => '400',
                 'message' => 'Data Alamat Gagal Ditambahkan',
-                'data' => null
             ]);
         }
         return response()->json([
@@ -53,7 +51,6 @@ class AddressController extends Controller
             return response()->json([
                 'code' => '404',
                 'message' => 'Data Alamat Tidak Ditemukan',
-                'data' => null
             ]);
         }
         $address->update($request->validated());
@@ -88,7 +85,6 @@ class AddressController extends Controller
             return response()->json([
                 'code' => '404',
                 'message' => 'Data Alamat Tidak Ditemukan',
-                'data' => null
             ]);
         }
         return response()->json([
@@ -107,7 +103,6 @@ class AddressController extends Controller
             return response()->json([
                 'code' => '404',
                 'message' => 'Data Alamat Tidak Ditemukan',
-                'data' => null
             ]);
         }
 
