@@ -19,12 +19,13 @@ Auth::routes([
 ]);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::resource('categoryProduct', CategoryProductController::class);
-    Route::resource('Product', ProductController::class);
-    Route::resource('carousel', CarouselController::class);
+    Route::middleware('admin')->group(function () {
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::resource('categoryProduct', CategoryProductController::class);
+        Route::resource('Product', ProductController::class);
+        Route::resource('carousel', CarouselController::class);
 
-    Route::resource('transaction', TransactionController::class);
-    Route::get('payments', [TransactionController::class, 'payment'])->name('payments');
-
+        Route::resource('transaction', TransactionController::class);
+        Route::get('payments', [TransactionController::class, 'payment'])->name('payments');
+    });
 });

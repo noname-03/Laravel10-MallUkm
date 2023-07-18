@@ -56,6 +56,11 @@
                                 </div>
                                 <p class="text-muted mb-4 mt-3">Masukan alamat email dan password untuk akses panel
                                     admin.</p>
+                                @if(session('error'))
+                                <div class="alert alert-danger">
+                                    {{ session('error') }}
+                                </div>
+                                @endif
                             </div>
 
                             <form action="{{route('login')}}" method="post">
