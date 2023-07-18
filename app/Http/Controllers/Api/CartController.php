@@ -22,6 +22,7 @@ class CartController extends Controller
             $item->price = $item->product->price;
             $item->price_retail = $item->product->price_retail;
             $item->title = $item->product->title;
+            $item->weight = $item->product->weight;
 
             unset($item->product); // Menghapus field "product"
 
