@@ -48,7 +48,14 @@ class CartController extends Controller
             ]);
         }
 
-        if ($request->qty > $product->qty) { // Jika qty yang dimasukkan melebihi stok
+        $productCart = Cart::where('user_id', $user->id)
+            ->where('product_id', $request->product_id)
+            ->where('unit_variant', $request->unit_variant)
+            ->first();
+
+        $totalQty = $productCart->qty + $request->qty;
+
+        if ($totalQty > $product->qty) { // Jika qty yang dimasukkan melebihi stok
             return response()->json([
                 'code' => 400,
                 'message' => 'Jumlah Produk Yang Anda Masukkan Melebihi Stok Produk'
@@ -87,24 +94,26 @@ class CartController extends Controller
 
     public function update($id, Request $request)
     {
-        $cart = Cart::where('id', $id)->first();
-        if ($cart == null) {
+        $cart = Cart::find($id);
+        if (!$cart) {
             return response()->json([
                 'code' => 404,
                 'message' => 'Data Keranjang Tidak Ditemukan'
             ]);
         }
 
-        $product = Product::where('id', $request->product_id)->first();
+        $product = Product::find($request->product_id);
 
-        if ($product == null) { // Jika product tidak ditemukan
+        if (!$product) {
             return response()->json([
                 'code' => 404,
                 'message' => 'Data Product Tidak Ditemukan'
             ]);
         }
 
-        if ($request->qty > $product->qty) { // Jika qty yang dimasukkan melebihi stok
+        $totalQty = $cart->qty + $request->qty;
+
+        if ($totalQty > $product->qty) {
             return response()->json([
                 'code' => 400,
                 'message' => 'Jumlah Produk Yang Anda Masukkan Melebihi Stok Produk'
@@ -112,7 +121,7 @@ class CartController extends Controller
         }
 
         // Melakukan update stok pada Cart
-        $cart->qty = $cart->qty + $request->qty;
+        $cart->qty = $totalQty;
         $cart->save();
 
         return response()->json([
