@@ -21,22 +21,21 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('me', [AuthController::class, 'me']);
         Route::post('getUser', [AuthController::class, 'getUser']);
         Route::post('logout', [AuthController::class, 'logout']);
-        Route::post('refresh', [AuthController::class, 'refresh']);
 
         Route::get('cart', [CartController::class, 'index']);
-        Route::post('cart', [CartController::class, 'store']);
+        Route::post('cart/store', [CartController::class, 'store']);
         Route::post('cart/update/{id}', [CartController::class, 'update']);
         Route::post('cart/delete/{id}', [CartController::class, 'delete']);
 
         Route::get('address', [AddressController::class, 'index']);
-        Route::post('address', [AddressController::class, 'store']);
+        Route::post('address/store', [AddressController::class, 'store']);
         Route::post('address/update/{id}', [AddressController::class, 'update']);
         Route::post('address/delete/{id}', [AddressController::class, 'delete']);
         Route::get('address/selected', [AddressController::class, 'selected']);
         Route::post('address/update/{id}/selected', [AddressController::class, 'updateSelected']);
 
         Route::get('transaction', [TransactionController::class, 'index']);
-        Route::post('transaction', [TransactionController::class, 'createPayment']);
+        Route::post('transaction/store', [TransactionController::class, 'createPayment']);
         Route::get('transaction/{params}', [TransactionController::class, 'sortByStatus']);
     });
 });

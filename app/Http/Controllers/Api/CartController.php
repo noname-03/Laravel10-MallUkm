@@ -53,7 +53,9 @@ class CartController extends Controller
             ->where('unit_variant', $request->unit_variant)
             ->first();
 
-        $totalQty = $productCart->qty + $request->qty;
+        //cek apakah qty yang dimasukkan melebihi stok dari yang sudah ada di cart
+        $totalQty = $productCart ? $productCart->qty + $request->qty : $request->qty;
+
 
         if ($totalQty > $product->qty) { // Jika qty yang dimasukkan melebihi stok
             return response()->json([
@@ -91,10 +93,11 @@ class CartController extends Controller
         ]);
     }
 
-
-    public function update($id, Request $request)
+    public function update($id, StoreCartRequest $request)
     {
+        $user = auth()->guard('api')->user();
         $cart = Cart::find($id);
+
         if (!$cart) {
             return response()->json([
                 'code' => 404,
@@ -110,6 +113,14 @@ class CartController extends Controller
                 'message' => 'Data Product Tidak Ditemukan'
             ]);
         }
+
+        // $requestedQty = intval($request->qty); // Mengonversi nilai ke integer untuk memastikan angka positif
+        // if ($requestedQty <= 0) {
+        //     return response()->json([
+        //         'code' => 400,
+        //         'message' => 'Jumlah Produk Yang Anda Masukkan Harus Lebih Besar Dari Nol'
+        //     ]);
+        // }
 
         $totalQty = $cart->qty + $request->qty;
 
