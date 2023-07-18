@@ -50,6 +50,18 @@ class TransactionController extends Controller
                 $transaction->update([
                     'status' => 'paid',
                 ]);
+
+                // Mengurangi stok produk untuk setiap detail transaksi pada transaksi ini
+                foreach ($transaction->detailTransaction as $detailTransaction) {
+                    $product = $detailTransaction->product;
+                    $newStock = $product->stock - $detailTransaction->qty;
+
+                    // Pastikan stok tidak kurang dari nol
+                    $product->update([
+                        'stock' => max(0, $newStock),
+                    ]);
+                }
+
             } else if ($request->transaction_status == 'expire') {
                 $transaction = Transaction::where('order_id', $request->order_id)->first();
                 $transaction->update([
@@ -57,7 +69,6 @@ class TransactionController extends Controller
                 ]);
             }
         }
-
     }
 
     public function createPayment(Request $request)
