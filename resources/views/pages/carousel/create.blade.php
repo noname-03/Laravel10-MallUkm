@@ -44,7 +44,7 @@
                                             class="text-danger">*</span></label>
                                     <input type="file" id="photo" name="photo"
                                         class="form-control @error('photo') is-invalid @enderror" accept="image/*"
-                                        multiple required>
+                                        required>
                                     @error('photo')
                                     <div class="invalid-feedback">
                                         {{$message}}
