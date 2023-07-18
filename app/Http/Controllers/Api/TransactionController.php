@@ -51,14 +51,14 @@ class TransactionController extends Controller
                     'status' => 'paid',
                 ]);
 
-                // Mengurangi stok produk untuk setiap detail transaksi pada transaksi ini
+                // Mengurangi kuantitas produk untuk setiap detail transaksi pada transaksi ini
                 foreach ($transaction->detailTransaction as $detailTransaction) {
                     $product = $detailTransaction->product;
-                    $newStock = $product->stock - $detailTransaction->qty;
 
-                    // Pastikan stok tidak kurang dari nol
+                    // Pastikan kuantitas produk tidak kurang dari nol
+                    $newQty = max(0, $product->qty - $detailTransaction->qty);
                     $product->update([
-                        'stock' => max(0, $newStock),
+                        'qty' => $newQty,
                     ]);
                 }
 
