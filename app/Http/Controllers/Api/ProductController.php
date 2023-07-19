@@ -10,7 +10,10 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        // get product qty > 0
+        $products = Product::where('qty', '>', 0)->get();
+
+        // $products = Product::all();
 
         $products->map(function ($product) {
             $unit_variant = explode(',', $product->unit_variant);
