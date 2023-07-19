@@ -36,6 +36,7 @@ Route::group(['prefix' => 'auth'], function () {
 
         Route::get('transaction', [TransactionController::class, 'index']);
         Route::post('transaction/store', [TransactionController::class, 'createPayment']);
+        Route::get('transaction/show/{id}', [TransactionController::class, 'show']);
         Route::get('transaction/{params}', [TransactionController::class, 'sortByStatus']);
     });
 });

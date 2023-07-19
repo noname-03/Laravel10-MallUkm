@@ -13,10 +13,10 @@ class ProductController extends Controller
         $products = Product::all();
 
         $products->map(function ($product) {
-            $photos = explode(',', $product->photo);
-            $photoUrls = [];
             $unit_variant = explode(',', $product->unit_variant);
 
+            $photoUrls = [];
+            $photos = explode(',', $product->photo);
             foreach ($photos as $photo) {
                 $photoUrls[] = asset('images/product/' . $photo);
             }

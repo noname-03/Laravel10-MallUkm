@@ -16,13 +16,53 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transaction = Transaction::with(['detailTransaction.product'])->where('user_id', auth()->guard('api')->user()->id)->get();
-        $transaction->each(function ($transaction) {
-            $transaction->detailTransaction->each(function ($detailTransaction) {
-                $detailTransaction->unsetRelation('product');
-            });
+        $transactions = Transaction::with(['detailTransaction.product'])->where('user_id', auth()->guard('api')->user()->id)->get();
+        $transactions->map(function ($transaction) {
+            $transaction->product_name = $transaction->detailTransaction[0]->product->title;
+            $transaction->product_qty = $transaction->detailTransaction[0]->qty;
+            $transaction->product_variant = $transaction->detailTransaction[0]->variant;
+            $photos = explode(',', $transaction->detailTransaction[0]->product->photo);
+            $transaction->product_photo = asset('images/product/' . $photos[0]);
+            unset($transaction->detailTransaction);
+            return $transaction;
         });
+        return $this->successResponse('Data Transaksi Berhasil Ditampilkan', $transactions);
+    }
+
+    public function show($id)
+    {
+        $transaction = Transaction::with(['detailTransaction'])->find($id);
+
+        if (!$transaction) {
+            return $this->notFoundResponse('Data Transaksi Tidak Ditemukan');
+        }
+
+        // Set atribut tambahan untuk transaksi
+        $transaction->user_username_sender = $transaction->user->name;
+        $transaction->address_username = $transaction->address->username;
+        $transaction->address_phone = $transaction->address->phone;
+        $transaction->address_in_address = $transaction->address->address;
+        $transaction->address_address_detail = $transaction->address->address_detail;
+
+        // Melakukan pemetaan pada detailTransaction dan mengatur atribut product_photo dan product_name
+        $transaction->detailTransaction->map(function ($detailTransaction) {
+            $photos = explode(',', $detailTransaction->product->photo);
+            $photoUrls = array_map(function ($photo) {
+                return asset('images/product/' . $photo);
+            }, $photos);
+
+            $detailTransaction->product_photo = $photoUrls[0];
+            $detailTransaction->product_name = $detailTransaction->product->title;
+            unset($detailTransaction->product);
+            return $detailTransaction;
+        });
+
+        // Menghapus relasi yang tidak diperlukan
+        unset($transaction->address);
+        unset($transaction->user);
+
         return $this->successResponse('Data Transaksi Berhasil Ditampilkan', $transaction);
+
     }
 
     public function sortByStatus($params)
