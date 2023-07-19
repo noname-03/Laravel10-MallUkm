@@ -2,7 +2,8 @@
 
 namespace App\Helpers;
 
-use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Storage;
+use File;
 
 
 class ImageHelper
@@ -16,5 +17,12 @@ class ImageHelper
         }
 
         return null;
+    }
+
+    //delete
+    public static function delete($fileName, $directory)
+    {
+        //with delete file in public mwith methode File
+        File::delete(public_path($directory . '/' . $fileName));
     }
 }

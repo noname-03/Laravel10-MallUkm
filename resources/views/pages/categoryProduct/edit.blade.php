@@ -29,15 +29,26 @@
 
                     <h4 class="header-title">Formulir Data Kategori Produk</h4>
 
-                    <form action="{{route('categoryProduct.update', $categoryProduct->id)}}" method="post">
+                    <form action="{{route('categoryProduct.update', $categoryProduct->id)}}" method="post"
+                        enctype="multipart/form-data">
                         @csrf @method('patch')
 
                         <div class="mb-3">
                             <label for="title" class="form-label">Nama Kategori Produk</label>
                             <input type="text" id="title" name="title"
                                 class="form-control @error('title') is-invalid @enderror"
-                                placeholder="Masukan Nama Kategori Produk" value="{{$categoryProduct->title}}">
+                                placeholder="Masukan Nama Kategori Produk" value="{{$categoryProduct->title}}" required>
                             @error('title')
+                            <div class="invalid-feedback">
+                                {{$message}}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Photo / Icon</label>
+                            <input type="file" id="file" name="file"
+                                class="form-control @error('file') is-invalid @enderror" accept="image/*">
+                            @error('file')
                             <div class="invalid-feedback">
                                 {{$message}}
                             </div>

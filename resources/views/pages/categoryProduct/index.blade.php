@@ -46,6 +46,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Judul</th>
+                                <th>Photo / Icon</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -55,6 +56,9 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$item->title}}</td>
+                                <td>
+                                    <img src="{{ asset('images/category/'.$item->photo) }}" alt="" width="100px">
+                                </td>
                                 <td>
                                     <form action="{{ route('categoryProduct.destroy', $item->id) }}" method="POST">
                                         @method('DELETE') @csrf
