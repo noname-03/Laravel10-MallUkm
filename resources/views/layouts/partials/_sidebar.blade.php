@@ -35,25 +35,25 @@
 
             <li class="menu-item">
                 <a href="{{route('categoryProduct.index')}}" class="menu-link">
-                    <span class="menu-icon"><i data-feather="check-circle"></i></span>
+                    <span class="menu-icon"><i data-feather="shopping-bag"></i></span>
                     <span class="menu-text"> Kategori </span>
                 </a>
             </li>
             <li class="menu-item">
                 <a href="{{route('Product.index')}}" class="menu-link">
-                    <span class="menu-icon"><i data-feather="check-circle"></i></span>
+                    <span class="menu-icon"><i data-feather="shopping-cart"></i></span>
                     <span class="menu-text"> Produk </span>
                 </a>
             </li>
             <li class="menu-item">
                 <a href="{{route('carousel.index')}}" class="menu-link">
-                    <span class="menu-icon"><i data-feather="check-circle"></i></span>
+                    <span class="menu-icon"><i data-feather="image"></i></span>
                     <span class="menu-text"> Gambar Bergulir </span>
                 </a>
             </li>
             <li class="menu-item">
                 <a href="{{route('transaction.index')}}" class="menu-link">
-                    <span class="menu-icon"><i data-feather="check-circle"></i></span>
+                    <span class="menu-icon"><i data-feather="dollar-sign"></i></span>
                     <span class="menu-text"> Transaksi </span>
                 </a>
             </li>
@@ -65,7 +65,7 @@
             </li>
             <li class="menu-item">
                 <a href="{{route('user.index')}}" class="menu-link">
-                    <span class="menu-icon"><i data-feather="check-circle"></i></span>
+                    <span class="menu-icon"><i data-feather="user"></i></span>
                     <span class="menu-text"> User </span>
                 </a>
             </li>

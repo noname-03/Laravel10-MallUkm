@@ -12,19 +12,84 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $string = "apple";
-        $pieces = explode(",", $string);
-        $firstElement = $pieces[0];
-        $products = Product::paginate(8);
-        $products->map(function ($product) { // mengmabil foto pertama
-            $toArray = explode(',', $product->photo);
-            $product->photo = $toArray[0];
-            return $product;
-        });
+        if ($request->ajax()) {
+            $search = $request->input('search');
+            $sortBy = $request->input('sortBy');
+
+            $query = Product::query();
+
+            if (!empty($search)) {
+                $query->where('title', 'like', '%' . $search . '%');
+            }
+
+            switch ($sortBy) {
+                case '1': // Populer
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                case '2': // Harga Rendah
+                    $query->orderBy('price', 'asc');
+                    break;
+                case '3': // Harga Tinggi
+                    $query->orderBy('price', 'desc');
+                    break;
+                case '4': // Stok Habis
+                    $query->where('qty', 0);
+                    break;
+                default:
+                    // Tanpa pengurutan
+                    break;
+            }
+
+            // Paginasi hasil dengan 8 item per halaman
+            $products = $query->paginate(8);
+            $products = $products->map(function ($product) {
+                // Mengubah string foto menjadi array
+                $toArray = explode(',', $product->photo);
+
+                // Mengambil elemen pertama dari array sebagai foto utama
+                $product->photo = $toArray[0];
+
+                return $product;
+            });
+
+            // Kembalikan data produk dalam format JSON sebagai respons AJAX
+            return response()->json($products);
+        }
+
+        // Jika bukan permintaan AJAX, lakukan rendering tampilan normal
+
+        // Ambil query pencarian dari permintaan (request)
+        $search = $request->input('search');
+
+        // Terapkan query pencarian pada kueri basis data
+        $query = Product::query();
+        if (!empty($search)) {
+            $query->where('title', 'like', '%' . $search . '%');
+        }
+
+        // Paginasi hasil dengan 8 item per halaman
+        $products = $query->paginate(8);
+
+        // Kembalikan tampilan dengan produk yang dipaginasi dan query pencarian
         return view('pages.product.index', compact('products'));
     }
+
+
+    // public function index()
+    // {
+    //     $string = "apple";
+    //     $pieces = explode(",", $string);
+    //     $firstElement = $pieces[0];
+    //     $products = Product::paginate(8);
+    //     $products->map(function ($product) { // mengmabil foto pertama
+    //         $toArray = explode(',', $product->photo);
+    //         $product->photo = $toArray[0];
+    //         return $product;
+    //     });
+    //     return view('pages.product.index', compact('products'));
+    // }
 
     public function create()
     {
