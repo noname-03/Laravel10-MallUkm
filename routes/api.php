@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CarouselController;
 use App\Http\Controllers\Api\AddressController;
+use App\Http\Controllers\Api\UserController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -38,10 +39,14 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('transaction/store', [TransactionController::class, 'createPayment']);
         Route::get('transaction/show/{id}', [TransactionController::class, 'show']);
         Route::get('transaction/{params}', [TransactionController::class, 'sortByStatus']);
+
+        Route::post('change/password', [UserController::class, 'changePassword']);
     });
 });
 
 Route::get('category', [CategoryProductController::class, 'index']);
+Route::get('category/show/{id}', [CategoryProductController::class, 'show']);
+Route::get('category/recomendation', [CategoryProductController::class, 'recomendation']);
 
 Route::get('product', [ProductController::class, 'index']);
 Route::get('product/show/{id}', [ProductController::class, 'show']);
