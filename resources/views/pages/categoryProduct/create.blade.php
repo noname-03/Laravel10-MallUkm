@@ -53,7 +53,8 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan</button>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan
+                            Data</button>
 
                     </form>
 

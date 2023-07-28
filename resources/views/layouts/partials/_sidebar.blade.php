@@ -34,6 +34,12 @@
             <li class="menu-title">Data</li>
 
             <li class="menu-item">
+                <a href="{{route('profileCompany.index')}}" class="menu-link">
+                    <span class="menu-icon"><i data-feather="airplay"></i></span>
+                    <span class="menu-text"> Profil Perusahaan </span>
+                </a>
+            </li>
+            <li class="menu-item">
                 <a href="{{route('categoryProduct.index')}}" class="menu-link">
                     <span class="menu-icon"><i data-feather="shopping-bag"></i></span>
                     <span class="menu-text"> Kategori </span>

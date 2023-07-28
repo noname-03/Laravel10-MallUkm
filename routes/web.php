@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\ProductController;
 use App\Http\Controllers\Web\CarouselController;
 use App\Http\Controllers\Web\TransactionController;
 use App\Http\Controllers\Web\UserController;
+use App\Http\Controllers\Web\ProfileCompanyController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -26,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('Product', ProductController::class);
         Route::resource('carousel', CarouselController::class);
         Route::resource('user', UserController::class);
+        Route::resource('profileCompany', ProfileCompanyController::class);
 
         Route::resource('transaction', TransactionController::class);
         Route::get('payments', [TransactionController::class, 'payment'])->name('payments');

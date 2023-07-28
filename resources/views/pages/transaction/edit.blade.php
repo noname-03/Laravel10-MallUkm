@@ -78,9 +78,10 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="text-center mb-3">
-                                    <button type="button" class="btn w-sm btn-info waves-effect">Cancel</button>
-                                    <button type="submit"
-                                        class="btn w-sm btn-success waves-effect waves-light">Perbarui</button>
+                                    <a href="{{route('transaction.index')}}"
+                                        class="btn w-sm btn-danger waves-effect">Kembali</a>
+                                    <button type="submit" class="btn w-sm btn-success waves-effect waves-light">Perbarui
+                                        Data</button>
                                 </div>
                             </div> <!-- end col -->
                         </div>

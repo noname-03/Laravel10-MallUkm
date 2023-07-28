@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePaymentRequest;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Midtrans\Config;
@@ -18,13 +19,16 @@ class TransactionController extends Controller
     {
         $transactions = Transaction::with(['detailTransaction.product'])->where('user_id', auth()->guard('api')->user()->id)->get();
         $transactions->map(function ($transaction) {
-            $transaction->product_name = $transaction->detailTransaction[0]->product->title;
-            $transaction->product_qty = $transaction->detailTransaction[0]->qty;
-            $transaction->product_variant = $transaction->detailTransaction[0]->variant;
-            $photos = explode(',', $transaction->detailTransaction[0]->product->photo);
-            $transaction->product_photo = asset('images/product/' . $photos[0]);
+            if (!$transaction->detailTransaction->isEmpty()) {
+                $transaction->product_name = $transaction->detailTransaction[0]->product->title;
+                $transaction->product_qty = $transaction->detailTransaction[0]->qty;
+                $transaction->product_variant = $transaction->detailTransaction[0]->variant;
+                $photos = explode(',', $transaction->detailTransaction[0]->product->photo);
+                $transaction->product_photo = asset('images/product/' . $photos[0]);
+                unset($transaction->detailTransaction);
+                return $transaction;
+            }
             unset($transaction->detailTransaction);
-            return $transaction;
         });
         return $this->successResponse('Data Transaksi Berhasil Ditampilkan', $transactions);
     }
@@ -111,7 +115,7 @@ class TransactionController extends Controller
         }
     }
 
-    public function createPayment(Request $request)
+    public function createPayment(StorePaymentRequest $request)
     {
         $address = $this->findAddress($request->address_id);
         if (!$address) {
