@@ -45,7 +45,11 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Judul</th>
+                                <th>No Hp</th>
+                                <th>Syarat</th>
+                                <th>Ketentuan</th>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -55,6 +59,10 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$item->phone}}</td>
+                                <td>{{$item->terms}}</td>
+                                <td>{{$item->conditions}}</td>
+                                <td>{{$item->latitude}}</td>
+                                <td>{{$item->longitude}}</td>
                                 <td>
                                     <form action="{{ route('profileCompany.destroy', $item->id) }}" method="POST">
                                         @method('DELETE') @csrf

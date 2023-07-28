@@ -35,7 +35,7 @@
         <div class="col-12">
             <div class="card">
                 <form action="{{route('profileCompany.update', $profileCompany->id)}}" method="post">
-                    @csrf
+                    @csrf @method('PUT')
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-12">
