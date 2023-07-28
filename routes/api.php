@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CarouselController;
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ProfileCompanyController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -41,8 +42,11 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('transaction/{params}', [TransactionController::class, 'sortByStatus']);
 
         Route::post('change/password', [UserController::class, 'changePassword']);
+
     });
 });
+
+Route::get('profile/company', [ProfileCompanyController::class, 'index']);
 
 Route::get('category', [CategoryProductController::class, 'index']);
 Route::get('category/show/{id}', [CategoryProductController::class, 'show']);
