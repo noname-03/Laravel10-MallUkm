@@ -16,6 +16,7 @@ class ProfileCompany extends Model
         'terms',
         'latitude',
         'longitude',
+        'radius',
         'conditions',
     ];
 }

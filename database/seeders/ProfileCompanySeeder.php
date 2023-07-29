@@ -18,6 +18,7 @@ class ProfileCompanySeeder extends Seeder
             'terms' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
             'latitude' => '-6.7158898',
             'longitude' => '108.5483058',
+            'radius' => '100',
             'conditions' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
         ]);
     }

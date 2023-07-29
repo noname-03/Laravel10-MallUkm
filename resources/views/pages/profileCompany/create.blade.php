@@ -82,6 +82,19 @@
 
                                     <div class="col-lg-6">
                                         <div class="mb-3">
+                                            <label for="radius" class="form-label">Radius <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="number" id="radius" name="radius"
+                                                class="form-control @error('radius') is-invalid @enderror"
+                                                placeholder="e.g : 1, 2 || dalam satuan meter"
+                                                value="{{old('radius')}}">
+                                            @error('radius')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                            </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
                                             <label for="terms" class="form-label">Syarat <span
                                                     class="text-danger">*</span></label>
                                             <textarea class="form-control @error('terms') is-invalid @enderror"

@@ -11,6 +11,8 @@ class ProfileCompanyController extends Controller
     public function index()
     {
         $profileCompany = ProfileCompany::first();
+        //profile company phone jadi wa.me
+        $profileCompany->phone = 'https://wa.me/' . $profileCompany->phone;
         return response()->json([
             'code' => 200,
             'message' => 'Berhasil Mengambil Data Profil Perusahaan',

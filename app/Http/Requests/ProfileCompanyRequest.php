@@ -18,6 +18,7 @@ class ProfileCompanyRequest extends FormRequest
             'terms' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
+            'radius' => 'required',
             'conditions' => 'required',
         ];
     }
@@ -31,6 +32,7 @@ class ProfileCompanyRequest extends FormRequest
             'latitude.required' => 'Latitude tidak boleh kosong',
             'longitude.required' => 'Longitude tidak boleh kosong',
             'conditions.required' => 'ketentuan tidak boleh kosong',
+            'radius.required' => 'Radius tidak boleh kosong'
         ];
     }
 
@@ -43,6 +45,7 @@ class ProfileCompanyRequest extends FormRequest
             'latitude' => 'latitude',
             'longitude' => 'longitude',
             'conditions' => 'conditions',
+            'radius' => 'radius'
         ];
     }
 }

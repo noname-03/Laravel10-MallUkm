@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\MethodHaversineController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TransactionController;
@@ -42,6 +43,8 @@ Route::group(['prefix' => 'auth'], function () {
         Route::get('transaction/{params}', [TransactionController::class, 'sortByStatus']);
 
         Route::post('change/password', [UserController::class, 'changePassword']);
+
+        Route::post('check/haverinse', [MethodHaversineController::class, 'checkHaversine']);
 
     });
 });
