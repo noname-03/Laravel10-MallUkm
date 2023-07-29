@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Helpers\ImageHelper;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
+
 
 class ProductController extends Controller
 {
@@ -44,18 +46,14 @@ class ProductController extends Controller
 
             // Paginasi hasil dengan 8 item per halaman
             $products = $query->paginate(8);
-            $products = $products->map(function ($product) {
-                // Mengubah string foto menjadi array
-                $toArray = explode(',', $product->photo);
 
-                // Mengambil elemen pertama dari array sebagai foto utama
-                $product->photo = $toArray[0];
+            // Jangan gunakan pemetaan pada setiap produk jika foto tetap berupa string
 
-                return $product;
-            });
-
-            // Kembalikan data produk dalam format JSON sebagai respons AJAX
-            return response()->json($products);
+            // Kembalikan data produk dan link paginasi dalam format JSON sebagai respons AJAX
+            return response()->json([
+                'data' => $products,
+                'links' => $products->links()->toHtml(), // Mengambil link paginasi dalam bentuk HTML
+            ]);
         }
 
         // Jika bukan permintaan AJAX, lakukan rendering tampilan normal
@@ -76,20 +74,6 @@ class ProductController extends Controller
         return view('pages.product.index', compact('products'));
     }
 
-
-    // public function index()
-    // {
-    //     $string = "apple";
-    //     $pieces = explode(",", $string);
-    //     $firstElement = $pieces[0];
-    //     $products = Product::paginate(8);
-    //     $products->map(function ($product) { // mengmabil foto pertama
-    //         $toArray = explode(',', $product->photo);
-    //         $product->photo = $toArray[0];
-    //         return $product;
-    //     });
-    //     return view('pages.product.index', compact('products'));
-    // }
 
     public function create()
     {

@@ -50,9 +50,8 @@
                         </div>
                         <div class="col-auto">
                             <div class="text-lg-end my-1 my-lg-0">
-                                <button type="button" class="btn btn-success waves-effect waves-light me-1"><i
-                                        class="mdi mdi-cog"></i></button>
-                                <a href="{{route('Product.create')}}" class="btn btn-danger waves-effect waves-light"><i
+                                <a href="{{route('Product.create')}}"
+                                    class="btn btn-primary waves-effect waves-light"><i
                                         class="mdi mdi-plus-circle me-1"></i> Tambah Baru</a>
                             </div>
                         </div><!-- end col-->
@@ -71,12 +70,10 @@
 
     <div class="row">
         <div class="col-12">
-            <ul class="pagination pagination-rounded justify-content-end mb-3">
-                {{ $products->links() }}
+            <ul class="pagination pagination-rounded justify-content-end mb-3" id="pagination-links">
+                <!-- Paginasi akan diisi melalui AJAX -->
             </ul>
-
-
-        </div> <!-- end col-->
+        </div>
     </div>
     <!-- end row-->
 
@@ -87,27 +84,33 @@
 @push('scripts')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+
 <script>
     $(document).ready(function() {
         // Function to fetch products using AJAX
-    function formatCurrency(price) {
-        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(price);
-    }
-    function fetchProducts(search, sortBy, page) {
-        $.ajax({
-            url: "{{ route('Product.index') }}",
-            type: "GET",
-            data: {
-                search: search,
-                sortBy: sortBy,
-                page: page // Tambahkan parameter page untuk pagination
-            },
-            dataType: "json",
-            success: function(data) {
-                var productsHtml = '';
-                // Loop through the products and build the HTML
-                $.each(data, function(index, product) {
-                    // console.log(product.photo);
+        function formatCurrency(price) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(price);
+        }
+        $(document).on('click', '#pagination-links a', function(e) {
+            e.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            updateProducts(page);
+        });
+        function fetchProducts(search, sortBy, page) {
+            $.ajax({
+                url: "{{ route('Product.index') }}",
+                type: "GET",
+                data: {
+                    search: search,
+                    sortBy: sortBy,
+                    page: page // Tambahkan parameter page untuk pagination
+                },
+                dataType: "json",
+                success: function(response) {
+                    console.log(response)
+                    var productsHtml = '';
+                    // Loop through the products and build the HTML
+                    $.each(response.data.data, function(index, product) {
                         productsHtml += '<div class="col-md-6 col-lg-4 col-xl-3">';
                         productsHtml += '<div class="card product-box">';
                         productsHtml += '<div class="card-body">';
@@ -143,11 +146,14 @@
                         productsHtml += '</div>'; // end col
                     });
 
-                // Update the product listing
-                $('#product-list').html(productsHtml);
-            }
-        });
-    }
+                    // Update the product listing
+                    $('#product-list').html(productsHtml);
+
+                    // Update pagination links
+                    $('#pagination-links').html(response.links);
+                }
+            });
+        }
 
         // Function to handle search and sort updates
         function updateProducts(page = 1) { // Tambahkan parameter page dengan nilai default 1

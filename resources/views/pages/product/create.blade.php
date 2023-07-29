@@ -114,11 +114,11 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="mb-3">
-                                    <label for="weight" class="form-label">Ukuran Barang <span
+                                    <label for="weight" class="form-label">Berat Barang <span
                                             class="text-danger">*</span></label>
                                     <input type="number" step="0.01" id="weight" name="weight"
                                         class="form-control @error('weight') is-invalid @enderror"
-                                        placeholder="e.g : 1 || 0.1 || ini dalam satuan KG" value="{{old('weight')}}"
+                                        placeholder="e.g : 1 || 2.1 || ini dalam satuan Gram" value="{{old('weight')}}"
                                         required>
                                     @error('weight')
                                     <div class="invalid-feedback">
