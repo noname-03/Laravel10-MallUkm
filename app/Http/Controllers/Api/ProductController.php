@@ -38,7 +38,7 @@ class ProductController extends Controller
 
     public function recomendation($params)
     {
-        $products = Product::inRandomOrder()->limit($params)->get();
+        $products = Product::where('qty', '>', 0)->inRandomOrder()->limit($params)->get();
         $products->map(function ($product) {
             $photos = explode(',', $product->photo);
             $photoUrls = [];

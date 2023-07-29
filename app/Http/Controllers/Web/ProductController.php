@@ -47,6 +47,13 @@ class ProductController extends Controller
             // Paginasi hasil dengan 8 item per halaman
             $products = $query->paginate(8);
 
+            // Ubah foto produk menjadi URL lengkap
+            $products->getCollection()->transform(function ($product) {
+                $photos = explode(',', $product->photo);
+                $product->photo = $photos[0];
+                return $product;
+            });
+
             // Jangan gunakan pemetaan pada setiap produk jika foto tetap berupa string
 
             // Kembalikan data produk dan link paginasi dalam format JSON sebagai respons AJAX
@@ -69,6 +76,12 @@ class ProductController extends Controller
 
         // Paginasi hasil dengan 8 item per halaman
         $products = $query->paginate(8);
+
+        $products->getCollection()->transform(function ($product) {
+            $photos = explode(',', $product->photo);
+            $product->photo = $photos[0];
+            return $product;
+        });
 
         // Kembalikan tampilan dengan produk yang dipaginasi dan query pencarian
         return view('pages.product.index', compact('products'));
