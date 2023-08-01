@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('profile_companies', function (Blueprint $table) {
             $table->id();
             $table->string('phone');
-            $table->string('terms');
-            $table->string('conditions');
+            $table->text('terms');
+            $table->text('provision');
             $table->string('latitude');
             $table->string('longitude');
             $table->timestamps();
