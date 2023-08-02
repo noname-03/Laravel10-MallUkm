@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->double('total');
             $table->text('payment_url')->nullable();
             $table->enum('status', ['paid', 'unpaid', 'canceled', 'sending', 'delivered']);
-            $table->enum('status_paymnent', ['online', 'offline']);
+            $table->enum('status_payment', ['online', 'offline']);
             $table->timestamps();
         });
     }
