@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Web\AnswerController;
+use App\Http\Controllers\Web\ResultController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\CategoryProductController;
 use App\Http\Controllers\Web\ProductController;
@@ -7,6 +9,7 @@ use App\Http\Controllers\Web\CarouselController;
 use App\Http\Controllers\Web\TransactionController;
 use App\Http\Controllers\Web\UserController;
 use App\Http\Controllers\Web\ProfileCompanyController;
+use App\Http\Controllers\Web\QuestionController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -31,5 +34,9 @@ Route::middleware(['auth'])->group(function () {
 
         Route::resource('transaction', TransactionController::class);
         Route::get('payments', [TransactionController::class, 'payment'])->name('payments');
+
+        Route::resource('question', QuestionController::class);
+        Route::get('answer', [AnswerController::class, 'index'])->name('answer.index');
+        Route::resource('result', ResultController::class);
     });
 });

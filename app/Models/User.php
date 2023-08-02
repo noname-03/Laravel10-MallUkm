@@ -11,6 +11,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Transaction;
+use App\Models\Result;
 
 
 class User extends Authenticatable implements JWTSubject
@@ -72,5 +73,10 @@ class User extends Authenticatable implements JWTSubject
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
     }
 }

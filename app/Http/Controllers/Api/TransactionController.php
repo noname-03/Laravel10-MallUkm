@@ -164,7 +164,8 @@ class TransactionController extends Controller
             'cost_courier' => $request->cost_courier,
             'receipt_number' => null,
             'total' => $request->total,
-            'status' => 'unpaid'
+            'status' => 'unpaid',
+            'status_payment' => $request->status_payment,
         ]);
     }
 

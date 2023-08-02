@@ -22,7 +22,8 @@ class Transaction extends Model
             'receipt_number',
             'total',
             'payment_url',
-            'status'
+            'status',
+            'status_paymnent'
         ];
 
     public function user()

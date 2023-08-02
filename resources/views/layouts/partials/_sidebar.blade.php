@@ -63,11 +63,32 @@
                     <span class="menu-text"> Transaksi </span>
                 </a>
             </li>
+
             <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <span class="menu-icon"><i data-feather="check-circle"></i></span>
-                    <span class="menu-text"> Pertanyaan </span>
+                <a href="#menuBaseui" data-bs-toggle="collapse" class="menu-link">
+                    <span class="menu-icon"><i data-feather="info"></i></span>
+                    <span class="menu-text"> CSI </span>
+                    <span class="menu-arrow"></span>
                 </a>
+                <div class="collapse collapse-md" id="menuBaseui">
+                    <ul class="sub-menu">
+                        <li class="menu-item">
+                            <a href="{{route('question.index')}}" class="menu-link">
+                                <span class="menu-text">Pertanyaan</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{route('answer.index')}}" class="menu-link">
+                                <span class="menu-text">Jawaban</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{route('result.index')}}" class="menu-link">
+                                <span class="menu-text">Hasil</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             <li class="menu-item">
                 <a href="{{route('user.index')}}" class="menu-link">

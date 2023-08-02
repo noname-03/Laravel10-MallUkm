@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\MethodHaversineController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Api\MethodHaversineController;
+use App\Http\Controllers\Api\ResultController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\AuthController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Api\CarouselController;
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ProfileCompanyController;
+use App\Http\Controllers\Api\QuestionController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -44,8 +46,9 @@ Route::group(['prefix' => 'auth'], function () {
 
         Route::post('change/password', [UserController::class, 'changePassword']);
 
-        Route::post('check/haverinse', [MethodHaversineController::class, 'checkHaversine']);
+        Route::get('question', [QuestionController::class, 'index']);
 
+        Route::post('result/store', [ResultController::class, 'store']);
     });
 });
 
@@ -61,3 +64,5 @@ Route::get('product/recomendation/{params}', [ProductController::class, 'recomen
 Route::get('product/promo', [ProductController::class, 'promo']);
 Route::get('carousel', [CarouselController::class, 'index']);
 Route::post('midtrans/callback', [TransactionController::class, 'callback']);
+
+Route::post('check/haverinse', [MethodHaversineController::class, 'checkHaversine']);
