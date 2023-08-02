@@ -10,6 +10,10 @@
         type="text/css" />
     <link href="{{ asset('/') }}assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css" rel="stylesheet"
         type="text/css" />
+    <link href="{{ asset('/') }}assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('/') }}assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet"
+        type="text/css" />
     <!-- third party css end -->
 @endpush
 
@@ -17,20 +21,34 @@
     <div class="container-fluid">
 
         <!-- start page title -->
+        <!-- Bagian Judul Halaman -->
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Hasil</li>
-                        </ol>
-                    </div>
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                        <li class="breadcrumb-item active">Hasil</li>
+                    </ol>
                     <h4 class="page-title">Hasil</h4>
                 </div>
             </div>
         </div>
-        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    <label class="form-label">Month View</label>
+                    <input type="text" class="form-control" id="bulan" data-provide="datepicker"
+                        data-date-format="MM yyyy" data-date-min-view-mode="1">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mt-3 mb-3">
+                    <button class="btn btn-primary" onclick="searchByMonthAndYear()">Search</button>
+                </div>
+            </div>
+        </div>
+
 
         <div class="row">
             <div class="col-12">
@@ -64,11 +82,17 @@
                                             <form action="{{ route('result.destroy', $item->id) }}" method="POST">
                                                 @method('DELETE') @csrf
                                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <button type="submit"
-                                                        onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Ini?')"
-                                                        class="btn btn-sm btn-outline-danger">
-                                                        Delete
-                                                    </button>
+                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                        <a href="{{ route('result.show', $item->id) }}"
+                                                            class="btn btn-sm btn-outline-info">
+                                                            Show
+                                                        </a>
+                                                        <button type="submit"
+                                                            onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Ini?')"
+                                                            class="btn btn-sm btn-outline-danger">
+                                                            Delete
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </form>
 
@@ -83,6 +107,7 @@
             </div><!-- end col-->
         </div>
         <!-- end row-->
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -128,6 +153,27 @@
             </div><!-- end col-->
         </div>
         <!-- end row-->
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-widgets">
+                            <a href="javascript: void(0);" data-bs-toggle="reload"><i class="mdi mdi-refresh"></i></a>
+                            <a data-bs-toggle="collapse" href="#cardCollpase5" role="button" aria-expanded="false"
+                                aria-controls="cardCollpase5"><i class="mdi mdi-minus"></i></a>
+                            <a href="javascript: void(0);" data-bs-toggle="remove"><i class="mdi mdi-close"></i></a>
+                        </div>
+                        <h4 class="header-title mb-0">Basic Column Chart</h4>
+
+                        <div id="cardCollpase5" class="collapse show" dir="ltr">
+                            <div id="apex-column-2" class="apex-charts pt-3" data-colors="#6658dd,#1abc9c,#CED4DC"></div>
+                        </div> <!-- collapsed end -->
+                    </div> <!-- end card-body -->
+                </div> <!-- end card-->
+            </div> <!-- end col-->
+        </div>
+        <!-- end row -->
     </div>
 @endsection
 @push('scripts')
@@ -147,6 +193,79 @@
     <script src="{{ asset('/') }}assets/libs/pdfmake/build/vfs_fonts.js"></script>
     <!-- third party js ends -->
 
+
+
+    <!-- Third Party js-->
+    <script src="{{ asset('/') }}assets/libs/apexcharts/apexcharts.min.js"></script>
+
+    <!-- init js -->
+    {{-- <script src="{{ asset('/') }}assets/js/pages/apexcharts.init.js"></script> --}}
+
+    {{-- datepicker --}}
+    <script src="{{ asset('/') }}assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <!-- Datatables init -->
     <script src="{{ asset('/') }}assets/js/pages/datatables.init.js"></script>
+
+    <script>
+        var options = {
+            series: [{
+                name: 'MIS',
+                data: {{ json_encode($rataRatamis) }}
+            }, {
+                name: 'MSS',
+                data: {{ json_encode($rataRatamss) }}
+            }],
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    endingShape: 'rounded'
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'],
+            },
+            yaxis: {
+                title: {
+                    text: 'Nilai'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function(val) {
+                        return val + " nilai"
+                    }
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#apex-column-2"), options);
+        chart.render();
+    </script>
+
+    <script>
+        function searchByMonthAndYear() {
+            var bulan = document.getElementById('bulan').value;
+            var bulanValue = new Date(bulan);
+            var bulanNumber = bulanValue.getMonth() + 1; // Tambahkan 1 karena index bulan dimulai dari 0
+            var tahun = bulanValue.getFullYear();
+            var url = "{{ route('result.index') }}" + "?bulan=" + bulanNumber + "&tahun=" + tahun;
+            window.location.href = url;
+        }
+    </script>
 @endpush

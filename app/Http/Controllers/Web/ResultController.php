@@ -8,13 +8,24 @@ use App\Models\Result;
 
 class ResultController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $results = Result::with('answers')->get();
+        // Ambil nilai bulan dan tahun dari query parameter
+        $bulan = $request->input('bulan');
+        $tahun = $request->input('tahun');
+        // dd($bulan, $tahun);
+        // Jika bulan dan tahun tidak ada, tampilkan semua data
+        if (empty($bulan) || empty($tahun)) {
+            $results = Result::with('answers')->get();
+        } else {
+            // Jika bulan dan tahun ada, filter data berdasarkan bulan dan tahun
+            $results = Result::whereMonth('created_at', '=', $bulan)
+                ->whereYear('created_at', '=', $tahun)
+                ->with('answers')
+                ->get();
+        }
 
         $results->map(function ($result) {
-            // $averageMis = round($result->answers->avg('mis'), 2);
-            // $averageMss = round($result->answers->avg('mss'), 2);
             $averageMis = $result->answers->avg('mis');
             $averageMss = $result->answers->avg('mss');
             $result->averageMis = $averageMis;
@@ -29,7 +40,6 @@ class ResultController extends Controller
         }
 
         $results->map(function ($result) use ($totalMis) {
-            // $result->wf = round(($result->averageMis / $totalMis) * 100, 2);
             $result->total = $totalMis;
             $result->wf = $result->averageMis / $totalMis * 100;
             $result->ws = $result->wf * $result->averageMss;
@@ -44,7 +54,44 @@ class ResultController extends Controller
         }
 
         $csi = round(($totalWt / 5), 2);
-        return view('pages.result.index', compact('results', 'totalMis', 'totalWt', 'csi'));
+
+        // Menghitung rata-rata MIS dan MSS per pertanyaan
+        $totalPertanyaan = 16; // Jumlah pertanyaan (kolom)
+        $rataRatamis = array_fill(0, $totalPertanyaan, 0);
+        $rataRatamss = array_fill(0, $totalPertanyaan, 0);
+
+        foreach ($results as $result) {
+            foreach ($result['answers'] as $key => $answer) {
+                $rataRatamis[$key] += $answer['mis'];
+                $rataRatamss[$key] += $answer['mss'];
+            }
+        }
+
+        $totalResults = count($results);
+
+        if ($totalResults > 0) {
+            foreach ($rataRatamis as &$value) {
+                $value /= $totalResults; // Menghitung rata-rata
+                $value = round($value, 2); // Pembulatan ke 2 angka desimal
+            }
+
+            foreach ($rataRatamss as &$value) {
+                $value /= $totalResults; // Menghitung rata-rata
+                $value = round($value, 2); // Pembulatan ke 2 angka desimal
+            }
+        }
+
+        return view('pages.result.index', compact('results', 'totalMis', 'totalWt', 'csi', 'rataRatamis', 'rataRatamss', ));
+    }
+
+    // show
+    public function show($id)
+    {
+        $result = Result::findOrFail($id);
+        $result->load('answers');
+        // dd($result);
+        // return response()->json($result);
+        return view('pages.result.show', compact('result'));
     }
 
     public function destroy($id)
