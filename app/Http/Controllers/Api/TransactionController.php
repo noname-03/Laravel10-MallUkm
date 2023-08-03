@@ -18,7 +18,7 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::with(['detailTransaction.product'])->where('user_id', auth()->guard('api')->user()->id)->get();
+        $transactions = Transaction::with(['detailTransaction.product'])->where('user_id', auth()->guard('api')->user()->id)->latest('created_at')->get();
         $transactions->map(function ($transaction) {
             if (!$transaction->detailTransaction->isEmpty()) {
                 $transaction->product_name = $transaction->detailTransaction[0]->product->title;
@@ -82,6 +82,18 @@ class TransactionController extends Controller
         if (!$transaction) {
             return $this->notFoundResponse('Data Transaksi Tidak Ditemukan');
         }
+        return $this->successResponse('Data Transaksi Berhasil Ditampilkan', $transaction);
+    }
+
+    public function updateStatusPayment(Request $request, $id)
+    {
+        $transaction = Transaction::find($id);
+        if (!$transaction) {
+            return $this->notFoundResponse('Data Transaksi Tidak Ditemukan');
+        }
+        $transaction->update([
+            'status' => $request->status,
+        ]);
         return $this->successResponse('Data Transaksi Berhasil Ditampilkan', $transaction);
     }
 
@@ -253,7 +265,7 @@ class TransactionController extends Controller
             'expiry' => [
                 'start_time' => date('Y-m-d H:i:s T'),
                 'unit' => "minutes",
-                'duration' => 1440
+                'duration' => 2
             ]
         ];
     }

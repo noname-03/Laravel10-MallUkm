@@ -44,6 +44,7 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('transaction/store/offline', [TransactionController::class, 'createPaymentOffline']);
         Route::get('transaction/show/{id}', [TransactionController::class, 'show']);
         Route::get('transaction/{params}', [TransactionController::class, 'sortByStatus']);
+        Route::post('transaction/update/status/payment/{id}', [TransactionController::class, 'updateStatusPayment']);
 
         Route::post('change/password', [UserController::class, 'changePassword']);
 

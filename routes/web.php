@@ -33,7 +33,6 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('profileCompany', ProfileCompanyController::class);
 
         Route::resource('transaction', TransactionController::class);
-        Route::get('payments', [TransactionController::class, 'payment'])->name('payments');
 
         Route::resource('question', QuestionController::class);
         Route::get('answer', [AnswerController::class, 'index'])->name('answer.index');
