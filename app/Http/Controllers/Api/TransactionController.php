@@ -102,10 +102,13 @@ class TransactionController extends Controller
         $serverKey = config('midtrans.server_key');
         $hashed = hash('sha512', $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
         if ($hashed == $request->signature_key) {
-            if ($request->transaction_status == 'capture' || 'settlement') {
+            if ($request->transaction_status === 'capture') {
                 $transaction = Transaction::where('order_id', $request->order_id)->first();
                 $transaction->update([
                     'status' => 'paid',
+                ]);
+                return response()->json([
+                    "status" => "paid"
                 ]);
 
                 // Mengurangi kuantitas produk untuk setiap detail transaksi pada transaksi ini
@@ -119,10 +122,43 @@ class TransactionController extends Controller
                     ]);
                 }
 
-            } else if ($request->transaction_status == 'expire') {
+            } else if ($request->transaction_status === 'settlement') {
+                $transaction = Transaction::where('order_id', $request->order_id)->first();
+                $transaction->update([
+                    'status' => 'paid',
+                ]);
+                return response()->json([
+                    "status" => "paid"
+                ]);
+
+                // Mengurangi kuantitas produk untuk setiap detail transaksi pada transaksi ini
+                foreach ($transaction->detailTransaction as $detailTransaction) {
+                    $product = $detailTransaction->product;
+
+                    // Pastikan kuantitas produk tidak kurang dari nol
+                    $newQty = max(0, $product->qty - $detailTransaction->qty);
+                    $product->update([
+                        'qty' => $newQty,
+                    ]);
+                }
+
+            } else if ($request->transaction_status === 'pending') {
+                $transaction = Transaction::where('order_id', $request->order_id)->first();
+                $transaction->update([
+                    'status' => 'unpaid',
+                ]);
+
+                return response()->json([
+                    "status" => "unpaid"
+                ]);
+            } else if ($request->transaction_status === 'expire') {
                 $transaction = Transaction::where('order_id', $request->order_id)->first();
                 $transaction->update([
                     'status' => 'canceled',
+                ]);
+
+                return response()->json([
+                    "status" => "canceled"
                 ]);
             }
         }
