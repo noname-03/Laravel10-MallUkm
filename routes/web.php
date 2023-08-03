@@ -39,3 +39,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('result', ResultController::class);
     });
 });
+
+Route::get('error', function () {
+    return view('pages.error.500');
+});

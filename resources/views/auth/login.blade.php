@@ -9,7 +9,7 @@
     <meta content="Coderthemes" name="author" />
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('/') }}assets/images/favicon.ico">
+    <link rel="shortcut icon" href="{{ asset('/') }}assets/images/logoMall.png">
 
     <!-- Theme Config Js -->
     <script src="{{ asset('/') }}assets/js/head.js"></script>
@@ -56,23 +56,23 @@
                                 </div>
                                 <p class="text-muted mb-4 mt-3">Masukan alamat email dan password untuk akses panel
                                     admin.</p>
-                                @if(session('error'))
-                                <div class="alert alert-danger">
-                                    {{ session('error') }}
-                                </div>
+                                @if (session('error'))
+                                    <div class="alert alert-danger">
+                                        {{ session('error') }}
+                                    </div>
                                 @endif
                             </div>
 
-                            <form action="{{route('login')}}" method="post">
+                            <form action="{{ route('login') }}" method="post">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="emailaddress" class="form-label">Email address</label>
                                     <input class="form-control @error('email') is-invalid @enderror" type="email"
                                         id="emailaddress" required placeholder="Enter your email" name="email">
                                     @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
 
@@ -86,9 +86,9 @@
                                             <span class="password-eye"></span>
                                         </div>
                                         @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
                                         @enderror
                                     </div>
                                 </div>
