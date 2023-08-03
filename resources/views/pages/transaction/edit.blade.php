@@ -84,7 +84,7 @@
                                 <div class="col-12">
                                     <div class="text-center mb-3">
                                         <a href="{{ route('transaction.index') }}"
-                                            class="btn w-sm btn-danger waves-effect">Kembali</a>
+                                            class="btn w-sm btn-primary waves-effect">Kembali</a>
                                         <button type="submit"
                                             class="btn w-sm btn-success waves-effect waves-light">Perbarui
                                             Data</button>

@@ -35,8 +35,11 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('transaction', TransactionController::class);
 
         Route::resource('question', QuestionController::class);
-        Route::get('answer', [AnswerController::class, 'index'])->name('answer.index');
         Route::resource('result', ResultController::class);
+
+        Route::get('answer', [AnswerController::class, 'index'])->name('answer.index');
+        Route::delete('/Product/{id}/delete-photo', [ProductController::class, 'deletePhoto'])->name('Product.deletePhoto');
+
     });
 });
 

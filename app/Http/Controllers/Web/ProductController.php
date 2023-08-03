@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\CategoryProduct;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -152,16 +153,36 @@ class ProductController extends Controller
         return view('pages.product.edit', compact('product', 'category'));
     }
 
-    public function update(Request $request, $id)
+
+    public function update(UpdateProductRequest $request, $id)
     {
-        $request->validate([
-            'title' => 'required',
-        ]);
+        $product = Product::findOrFail($id);
 
-        Product::findOrFail($id)->update($request->all());
+        $data = $request->except('_token', '_method', 'photo');
 
-        return redirect()->route('product.index');
+        // Update product data
+        $product->update($data);
+
+        if ($request->hasFile('photo')) {
+            $currentPhotos = explode(',', $product->photo);
+            $uploadedPhotos = [];
+
+            foreach ($request->file('photo') as $photo) {
+
+                $filename = ImageHelper::upload($photo, 'images/product');
+                $uploadedPhotos[] = $filename;
+            }
+
+            // Gabungkan foto yang di-upload dengan foto yang sudah ada
+            $mergedPhotos = array_merge($currentPhotos, $uploadedPhotos);
+            $product->photo = implode(',', $mergedPhotos);
+            $product->save();
+        }
+
+        return redirect()->route('Product.index')->with('success', 'Produk berhasil diperbarui.');
     }
+
+
 
     public function destroy($id)
     {
@@ -172,5 +193,23 @@ class ProductController extends Controller
         }
         $product->delete();
         return redirect()->route('Product.index');
+    }
+
+    public function deletePhoto(Request $request, $id)
+    {
+        $photoName = $request->input('photo_name');
+
+        // Hapus foto dari database
+        $product = Product::find($id);
+        $photos = explode(',', $product->photo);
+        $updatedPhotos = array_diff($photos, [$photoName]);
+        $product->photo = implode(',', $updatedPhotos);
+        $product->save();
+
+        // Hapus foto dari server
+
+        File::delete(public_path('images/product/' . $photoName));
+
+        return redirect()->back();
     }
 }
