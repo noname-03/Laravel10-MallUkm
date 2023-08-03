@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePaymentRequest;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Midtrans\Config;
 use Midtrans\Snap;
@@ -143,6 +144,33 @@ class TransactionController extends Controller
 
         return $this->successResponse('Data Transaksi Berhasil Ditambahkan!', $transaction);
     }
+    public function createPaymentOffline(Request $request)
+    {
+        $address = $this->findAddress($request->address_id);
+        if (!$address) {
+            return $this->notFoundResponse('Data Alamat Tidak Ditemukan');
+        }
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = false;
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
+
+        $uuid = $this->generateUuid();
+        $transaction = $this->createTransaction($request, $uuid);
+        $detailTransaction = $this->createDetailTransaction($request->products, $transaction);
+
+        $params = $this->buildTransactionParams($request, $uuid, $address, $detailTransaction);
+        $snapToken = $this->createSnapTransaction($params);
+        if (!$snapToken) {
+            return $this->errorResponse('Data Transaksi Gagal Ditambahkan');
+        }
+
+        $transaction->update([
+            'payment_url' => $snapToken->redirect_url,
+        ]);
+
+        return $this->successResponse('Data Transaksi Berhasil Ditambahkan!', $transaction);
+    }
 
     private function findAddress($addressId)
     {
@@ -151,7 +179,10 @@ class TransactionController extends Controller
 
     private function generateUuid()
     {
-        return Str::uuid();
+        $date = Carbon::now()->format('Ymd');
+        $time = Carbon::now()->format('hms');
+        $data = 'INV/' . $date . '/' . Str::random(5) . '/' . $time;
+        return $data;
     }
 
     private function createTransaction($request, $uuid)
