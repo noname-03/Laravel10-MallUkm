@@ -60,7 +60,7 @@
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$item->phone}}</td>
                                 <td>{{$item->terms}}</td>
-                                <td>{{$item->conditions}}</td>
+                                <td>{{$item->provision}}</td>
                                 <td>{{$item->latitude}}</td>
                                 <td>{{$item->longitude}}</td>
                                 <td>

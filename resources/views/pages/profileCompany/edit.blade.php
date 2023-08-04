@@ -108,11 +108,11 @@
                                                 @enderror
                                             </div>
                                             <div class="mb-3">
-                                                <label for="conditions" class="form-label">Ketentuan <span
+                                                <label for="provision" class="form-label">Ketentuan <span
                                                         class="text-danger">*</span></label>
-                                                <textarea class="form-control @error('conditions') is-invalid @enderror id=" conditions" rows="3"
-                                                    placeholder="e.g : bahwa ini adalah sesuatu yang baik dan benar" name="conditions">{{ old('conditions', $profileCompany->conditions) }}</textarea>
-                                                @error('conditions')
+                                                <textarea class="form-control @error('provision') is-invalid @enderror id=" provision" rows="3"
+                                                    placeholder="e.g : bahwa ini adalah sesuatu yang baik dan benar" name="provision">{{ old('provision', $profileCompany->provision) }}</textarea>
+                                                @error('provision')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
                                                     </div>
