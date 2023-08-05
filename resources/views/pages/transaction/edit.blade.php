@@ -50,10 +50,10 @@
                                                     <option value="unpaid"
                                                         {{ $transaction->status === 'unpaid' ? 'selected' : '' }}>
                                                         Unpaid</option>
-                                                    <option value="unpaid"
+                                                    <option value="sending"
                                                         {{ $transaction->status === 'sending' ? 'selected' : '' }}>
                                                         Sending</option>
-                                                    <option value="unpaid"
+                                                    <option value="delivered"
                                                         {{ $transaction->status === 'delivered' ? 'selected' : '' }}>
                                                         Delivered</option>
                                                     <option value="canceled"
