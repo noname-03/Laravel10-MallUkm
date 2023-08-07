@@ -11,13 +11,20 @@ class ProfileCompanyController extends Controller
 {
     public function index()
     {
-        $profileCompany = ProfileCompany::all();
-        return view('pages.profileCompany.index', compact('profileCompany'));
+        $profileCompany = ProfileCompany::first();
+        $profileCompanyCount = ProfileCompany::count();
+        return view('pages.profileCompany.index', compact('profileCompany', 'profileCompanyCount'));
     }
 
     public function create()
     {
-        return view('pages.profileCompany.create');
+
+        $profileCompanyCount = ProfileCompany::count();
+        if ($profileCompanyCount > 0) {
+            return redirect()->back();
+        } else {
+            return view('pages.profileCompany.create');
+        }
     }
 
     public function store(ProfileCompanyRequest $request)
