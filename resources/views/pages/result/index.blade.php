@@ -164,7 +164,7 @@
                                 aria-controls="cardCollpase5"><i class="mdi mdi-minus"></i></a>
                             <a href="javascript: void(0);" data-bs-toggle="remove"><i class="mdi mdi-close"></i></a>
                         </div>
-                        <h4 class="header-title mb-0">Basic Column Chart</h4>
+                        <h4 class="header-title mb-0">CSI</h4>
 
                         <div id="cardCollpase5" class="collapse show" dir="ltr">
                             <div id="apex-column-2" class="apex-charts pt-3" data-colors="#6658dd,#1abc9c,#CED4DC"></div>
