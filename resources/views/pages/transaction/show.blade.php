@@ -74,6 +74,10 @@
                                                 <span class="badge bg-success">Paid</span>
                                             @elseif ($transaction->status === 'unpaid')
                                                 <span class="badge bg-info">Unpaid</span>
+                                            @elseif ($transaction->status === 'sending')
+                                                <span class="badge bg-warning">Sending</span>
+                                            @elseif ($transaction->status === 'delivered')
+                                                <span class="badge bg-info">Delivered</span>
                                             @else
                                                 <span class="badge bg-danger">Canceled</span>
                                             @endif
