@@ -150,7 +150,8 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $category = CategoryProduct::all();
-        return view('pages.product.edit', compact('product', 'category'));
+        $check = empty($product->photo) ? 1 : 0;
+        return view('pages.product.edit', compact('product', 'category', 'check'));
     }
 
 
@@ -164,7 +165,6 @@ class ProductController extends Controller
         $product->update($data);
 
         if ($request->hasFile('photo')) {
-            $currentPhotos = explode(',', $product->photo);
             $uploadedPhotos = [];
 
             foreach ($request->file('photo') as $photo) {
@@ -174,12 +174,13 @@ class ProductController extends Controller
             }
 
             // Gabungkan foto yang di-upload dengan foto yang sudah ada
+            $currentPhotos = $product->photo ? explode(',', $product->photo) : [];
             $mergedPhotos = array_merge($currentPhotos, $uploadedPhotos);
             $product->photo = implode(',', $mergedPhotos);
             $product->save();
         }
 
-        return redirect()->route('Product.index')->with('success', 'Produk berhasil diperbarui.');
+        return redirect()->route('Product.index');
     }
 
 

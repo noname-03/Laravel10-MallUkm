@@ -179,25 +179,27 @@
                                         <div class="row">
                                             @php
                                                 $photos = explode(',', $product->photo);
+                                                // var_dump($photos);
                                             @endphp
+                                            @if ($check === 0)
+                                                <!-- Loop untuk semua foto -->
+                                                @foreach ($photos as $photo)
+                                                    <div class="col-md-4">
+                                                        <div class="card">
+                                                            <img src="{{ asset('images/product/' . $photo) }}"
+                                                                class="card-img-top" alt="Preview Foto">
+                                                            <div class="card-body">
+                                                                <a href="#"
+                                                                    onclick="event.preventDefault(); document.getElementById('deleted-photo-form').submit();"
+                                                                    class="btn btn-danger btn-block">
+                                                                    <span>Delete</span>
+                                                                </a>
 
-                                            <!-- Loop untuk semua foto -->
-                                            @foreach ($photos as $photo)
-                                                <div class="col-md-4">
-                                                    <div class="card">
-                                                        <img src="{{ asset('images/product/' . $photo) }}"
-                                                            class="card-img-top" alt="Preview Foto">
-                                                        <div class="card-body">
-                                                            <a href="#"
-                                                                onclick="event.preventDefault(); document.getElementById('deleted-photo-form').submit();"
-                                                                class="btn btn-danger btn-block">
-                                                                <span>Delete</span>
-                                                            </a>
-
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            @endforeach
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </div>
 
@@ -216,11 +218,14 @@
                         </div>
                         <!-- end row -->
                     </form>
-                    <form id="deleted-photo-form" action="{{ route('Product.deletePhoto', $product->id) }}"
-                        method="POST" class="d-none">
-                        <input type="hidden" name="photo_name" value="{{ $photo }}">
-                        @csrf @method('DELETE')
-                    </form>
+
+                    @if ($check === 0)
+                        <form id="deleted-photo-form" action="{{ route('Product.deletePhoto', $product->id) }}"
+                            method="POST" class="d-none">
+                            <input type="hidden" name="photo_name" value="{{ $photo }}">
+                            @csrf @method('DELETE')
+                        </form>
+                    @endif
                 </div> <!-- end card -->
             </div> <!-- end col -->
         </div>
