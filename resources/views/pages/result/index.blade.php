@@ -129,20 +129,7 @@
                                     <td>{{ round($totalWt, 2) }}</td>
                                     <td>{{ $csi }}</td>
                                     <td>
-                                        @if ($csi >= 0 && $csi <= 20)
-                                            <p>Tidak Puas</p>
-                                        @elseif ($csi >= 21 && $csi <= 40)
-                                            <p>Kurang Puas</p>
-                                        @elseif ($csi >= 41 && $csi <= 60)
-                                            <p>Puas</p>
-                                        @elseif ($csi >= 61 && $csi <= 80)
-                                            <p>Cukup Puas</p>
-                                        @elseif ($csi >= 81 && $csi <= 100)
-                                            <p>Sangat Puas
-                                            </p>
-                                        @else
-                                            <p>Nilai tidak valid</p>
-                                        @endif
+                                        {{ $csis }}
                                     </td>
                                 </tr>
                             </tbody>

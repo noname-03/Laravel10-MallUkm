@@ -81,7 +81,23 @@ class ResultController extends Controller
             }
         }
 
-        return view('pages.result.index', compact('results', 'totalMis', 'totalWt', 'csi', 'rataRatamis', 'rataRatamss', ));
+        $pembulatan = floor($csi);
+
+        if ($pembulatan >= 0 && $pembulatan <= 19) {
+            $csis = "Tidak Puas";
+        } elseif ($pembulatan >= 20 && $pembulatan <= 39) {
+            $csis = "Kurang Puas";
+        } elseif ($pembulatan >= 40 && $pembulatan <= 59) {
+            $csis = "Puas";
+        } elseif ($pembulatan >= 60 && $pembulatan <= 79) {
+            $csis = "Cukup Puas";
+        } elseif ($pembulatan >= 80 && $pembulatan <= 100) {
+            $csis = "Sangat Puas";
+        } else {
+            $csis = "Nilai tidak valid";
+        }
+
+        return view('pages.result.index', compact('results', 'totalMis', 'totalWt', 'csi', 'rataRatamis', 'rataRatamss', 'csis'));
     }
 
     // show
@@ -89,7 +105,6 @@ class ResultController extends Controller
     {
         $result = Result::findOrFail($id);
         $result->load('answers');
-        // dd($result);
         // return response()->json($result);
         return view('pages.result.show', compact('result'));
     }

@@ -142,7 +142,6 @@ class ProductController extends Controller
             $product->status = "Tidak Tersedia";
         }
 
-        // dd($product);
         return view('pages.product.show', compact('product'));
     }
 
@@ -182,8 +181,6 @@ class ProductController extends Controller
 
         return redirect()->route('Product.index');
     }
-
-
 
     public function destroy($id)
     {
