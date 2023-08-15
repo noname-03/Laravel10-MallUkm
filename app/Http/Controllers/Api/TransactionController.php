@@ -301,7 +301,7 @@ class TransactionController extends Controller
             'expiry' => [
                 'start_time' => date('Y-m-d H:i:s T'),
                 'unit' => "minutes",
-                'duration' => 2
+                'duration' => 1440
             ]
         ];
     }
