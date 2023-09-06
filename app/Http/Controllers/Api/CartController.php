@@ -14,7 +14,11 @@ class CartController extends Controller
     public function index()
     {
         $user = auth()->guard('api')->user();
-        $cart = Cart::with('product')->where('user_id', $user->id)->get();
+        $cart = Cart::with('product')
+            ->where('user_id', $user->id)
+            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan tanggal pembuatan secara terbalik (terbaru dulu)
+            ->get();
+
 
         $cart->map(function ($item) {
             $toArray = explode(',', $item->product->photo);
