@@ -26,6 +26,7 @@ class TransactionController extends Controller
                 $transaction->product_variant = $transaction->detailTransaction[0]->variant;
                 $photos = explode(',', $transaction->detailTransaction[0]->product->photo);
                 $transaction->product_photo = asset('images/product/' . $photos[0]);
+                $transaction->total_products = $transaction->detailTransaction->count();
                 unset($transaction->detailTransaction);
                 return $transaction;
             }
