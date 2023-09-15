@@ -73,17 +73,25 @@ class TransactionController extends Controller
 
     public function sortByStatus($params)
     {
-        $transaction = Transaction::with(['detailTransaction.product'])->where('user_id', auth()->guard('api')->user()->id)->where('status', $params)->get();
-        $transaction->each(function ($transaction) {
-            $transaction->detailTransaction->each(function ($detailTransaction) {
-                $detailTransaction->unsetRelation('product');
-            });
+        $transactions = Transaction::with(['detailTransaction.product'])->where('user_id', auth()->guard('api')->user()->id)->where('status', $params)->get();
+        $transactions->map(function ($transaction) {
+            if (!$transaction->detailTransaction->isEmpty()) {
+                $transaction->product_name = $transaction->detailTransaction[0]->product->title;
+                $transaction->product_qty = $transaction->detailTransaction[0]->qty;
+                $transaction->product_variant = $transaction->detailTransaction[0]->variant;
+                $photos = explode(',', $transaction->detailTransaction[0]->product->photo);
+                $transaction->product_photo = asset('images/product/' . $photos[0]);
+                $transaction->total_products = $transaction->detailTransaction->count();
+                unset($transaction->detailTransaction);
+                return $transaction;
+            }
+            unset($transaction->detailTransaction);
         });
 
-        if (!$transaction) {
+        if (!$transactions) {
             return $this->notFoundResponse('Data Transaksi Tidak Ditemukan');
         }
-        return $this->successResponse('Data Transaksi Berhasil Ditampilkan', $transaction);
+        return $this->successResponse('Data Transaksi Berhasil Ditampilkan', $transactions);
     }
 
     public function updateStatusPayment(Request $request, $id)
