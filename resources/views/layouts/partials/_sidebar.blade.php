@@ -97,28 +97,6 @@
                 </a>
             </li>
 
-            {{-- Referensi --}}
-            <li class="menu-title">Referensi</li>
-
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <span class="menu-icon"><i data-feather="clipboard"></i></span>
-                    <span class="menu-text"> Angka Kredit </span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <span class="menu-icon"><i data-feather="user"></i></span>
-                    <span class="menu-text"> Akun </span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <span class="menu-icon"><i class="icon-question"></i></span>
-                    <span class="menu-text"> FAQ </span>
-                </a>
-            </li>
-
         </ul>
         <!--- End Menu -->
         <div class="clearfix"></div>
