@@ -20,7 +20,8 @@ Auth::routes([
     // Registration Routes...
     'reset' => false,
     // Password Reset Routes...
-    'verify' => false, // Email Verification Routes...
+    'verify' => false,
+    // Email Verification Routes...
 ]);
 
 Route::middleware(['auth'])->group(function () {
@@ -44,5 +45,13 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('error', function () {
-    return view('pages.error.500');
+    return view('pages.response.error');
+});
+
+Route::get('finish', function () {
+    return view('pages.response.finish');
+});
+
+Route::get('unfinish', function () {
+    return view('pages.response.unfinish');
 });

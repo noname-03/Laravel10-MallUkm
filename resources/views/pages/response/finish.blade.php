@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Mall UKM | Login</title>
+    <title>Mall UKM | Response</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
@@ -51,8 +51,8 @@
                             </div>
 
                             <div class="text-center mt-4">
-                                <h1 class="text-error">500</h1>
-                                <h3 class="mt-3 mb-2">Silahkan Coba Kembali !</h3>
+                                <h1 class="text-error">200</h1>
+                                <h3 class="mt-3 mb-2">Transaksi Anda Berhasil !</h3>
                             </div>
 
                         </div> <!-- end card-body -->
