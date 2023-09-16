@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\CategoryProduct;
 use App\Models\Cart;
 use App\Models\DetailTransaction;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'category_id',
@@ -25,6 +26,8 @@ class Product extends Model
         'description',
         'photo',
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function categoryProduct()
     {

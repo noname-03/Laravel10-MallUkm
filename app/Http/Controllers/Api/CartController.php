@@ -14,21 +14,29 @@ class CartController extends Controller
     public function index()
     {
         $user = auth()->guard('api')->user();
-        $cart = Cart::with('product')
-            ->where('user_id', $user->id)
-            ->orderBy('created_at', 'desc') // Mengurutkan berdasarkan tanggal pembuatan secara terbalik (terbaru dulu)
+
+        // Mengambil data cart dengan produk yang belum dihapus
+        $cart = Cart::where('user_id', $user->id)
+            ->with('product')
+            ->orderBy('created_at', 'desc')
             ->get();
 
+        // Filter item cart yang memiliki produk yang belum dihapus
+        $cart = $cart->filter(function ($item) {
+            return $item->product && $item->product->deleted_at === null;
+        });
 
-        $cart->map(function ($item) {
-            $toArray = explode(',', $item->product->photo);
-            $item->photo = asset('images/product/' . $toArray[0]);
-            $item->price = $item->product->price;
-            $item->price_retail = $item->product->price_retail;
-            $item->title = $item->product->title;
-            $item->weight = $item->product->weight;
-
-            unset($item->product); // Menghapus field "product"
+        // Mengubah data untuk menyesuaikan respons JSON
+        $cart->transform(function ($item) {
+            if ($item->product) {
+                $toArray = explode(',', $item->product->photo);
+                $item->photo = asset('images/product/' . $toArray[0]);
+                $item->price = $item->product->price;
+                $item->price_retail = $item->product->price_retail;
+                $item->title = $item->product->title;
+                $item->weight = $item->product->weight;
+                unset($item->product); // Menghapus field "product"
+            }
 
             return $item;
         });
@@ -39,6 +47,8 @@ class CartController extends Controller
             'data' => $cart
         ]);
     }
+
+
 
     public function store(StoreCartRequest $request)
     {

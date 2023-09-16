@@ -125,7 +125,13 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>
-                                                        <b>{{ $item->product->title }}</b> <br />
+                                                        @php
+                                                            $product = $item
+                                                                ->product()
+                                                                ->withTrashed()
+                                                                ->first();
+                                                        @endphp
+                                                        <b>{{ $product->title }}</b> <br />
                                                         {{ $item->variant }}
                                                     </td>
                                                     <td>{{ $item->qty }}</td>

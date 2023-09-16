@@ -18,9 +18,17 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::with(['detailTransaction.product'])->where('user_id', auth()->guard('api')->user()->id)->latest('created_at')->get();
+        $transactions = Transaction::with([
+            'detailTransaction.product' => function ($query) {
+                $query->withTrashed(); // Mengambil relasi produk termasuk yang sudah dihapus (soft delete)
+            }
+        ])
+            ->where('user_id', auth()->guard('api')->user()->id)
+            ->latest('created_at')
+            ->get();
+
         $transactions->map(function ($transaction) {
-            if (!$transaction->detailTransaction->isEmpty()) {
+            if (!$transaction->detailTransaction->isEmpty() && $transaction->detailTransaction[0]->product) {
                 $transaction->product_name = $transaction->detailTransaction[0]->product->title;
                 $transaction->product_qty = $transaction->detailTransaction[0]->qty;
                 $transaction->product_variant = $transaction->detailTransaction[0]->variant;
@@ -32,12 +40,18 @@ class TransactionController extends Controller
             }
             unset($transaction->detailTransaction);
         });
+
         return $this->successResponse('Data Transaksi Berhasil Ditampilkan', $transactions);
     }
 
+
     public function show($id)
     {
-        $transaction = Transaction::with(['detailTransaction'])->find($id);
+        $transaction = Transaction::with([
+            'detailTransaction.product' => function ($query) {
+                $query->withTrashed(); // Mengambil relasi produk termasuk yang sudah dihapus (soft delete)
+            }
+        ])->find($id);
 
         if (!$transaction) {
             return $this->notFoundResponse('Data Transaksi Tidak Ditemukan');
